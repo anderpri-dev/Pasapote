@@ -1,0 +1,245 @@
+[
+  {
+    "id": "aixeberri",
+    "number": "1",
+    "name": "aixeberri",
+    "year": "1996",
+    "place": "Areatza",
+    "txupineras": ["Sonia Charcán (1997)", "Saioa Domínguez Hormaetxe (2018)"],
+    "color": "#00a1e0"
+  },
+  {
+    "id": "algara",
+    "number": "2",
+    "name": "algara",
+    "year": "1994",
+    "place": "Naxa",
+    "txupineras": ["Isabel Isazelaia (2008)"],
+    "color": "#0058a5"
+  },
+  {
+    "id": "altxaporrue",
+    "number": "3",
+    "name": "altxaporrue",
+    "year": "2004",
+    "place": "Kulturgune",
+    "txupineras": ["Larraitz Cisneros (2007)"],
+    "color": "#e7421c"
+  },
+  {
+    "id": "askapena",
+    "number": "4",
+    "name": "askapeña",
+    "year": "1991",
+    "place": "",
+    "txupineras": ["Begoña Benedicto (2004)", "Ane Ortiz Ballesteros (2017)"],
+    "color": "#a2c43b"
+  },
+  {
+    "id": "bizizaleak",
+    "number": "5",
+    "name": "bizizaleak",
+    "year": "1978",
+    "place": "Triangune",
+    "txupineras": ["Eva Dolado (1990)"],
+    "color": "#49ad33"
+  },
+  {
+    "id": "eguzkizaleak",
+    "number": "6",
+    "name": "eguzkizaleak",
+    "year": "1989",
+    "place": "",
+    "txupineras": ["Sonia Polo (2009)"],
+    "color": "#f09529"
+  },
+  {
+    "id": "hau_pittu_hau",
+    "number": "7",
+    "name": "hau pittu hau!",
+    "year": "1987",
+    "place": "Euskalgune",
+    "txupineras": ["Miren Barrutia (1991)"],
+    "color": "#681f79"
+  },
+  {
+    "id": "hontzak",
+    "number": "8",
+    "name": "hontzak",
+    "year": "1978",
+    "place": "Tingladoak",
+    "txupineras": ["Sandra Guzmán (1995)"],
+    "color": "#e8431d"
+  },
+  {
+    "id": "hor_dago_abante",
+    "number": "9",
+    "name": "hor dago abante!",
+    "year": "1993",
+    "place": "Teilape gunea",
+    "txupineras": ["Arantza de Jesús (1996)"],
+    "color": "#dede48"
+  },
+  {
+    "id": "kaixo",
+    "number": "10",
+    "name": "kaixo",
+    "year": "1981",
+    "place": "Arriaga atzekaldea",
+    "txupineras": ["Montserrat Valerio (1981)"],
+    "color": "#0c65af"
+  },
+  {
+    "id": "kaskagorri",
+    "number": "11",
+    "name": "kaskagorri",
+    "year": "1989",
+    "place": "Arriaga atzekaldea",
+    "txupineras": ["Montserrat Valerio (1990)"],
+    "color": "#a42422"
+  },
+  {
+    "id": "kranba",
+    "number": "12",
+    "name": "kranba!",
+    "year": "2008",
+    "place": "Piratagune",
+    "txupineras": ["Gisèle Felli Gorritxo (2016)"],
+    "color": "#ef7d00"
+  },
+  {
+    "id": "mekaguen",
+    "number": "13",
+    "name": "mekaguen",
+    "year": "1991",
+    "place": "Triangune",
+    "txupineras": ["Patricia Lezama (2011)"],
+    "color": "#13a538"
+  },
+  {
+    "id": "moskotarrak",
+    "number": "14",
+    "name": "moskotarrak",
+    "year": "1978",
+    "place": "Areatza kaia",
+    "txupineras": ["Anabel Fernández Pareda (1982)"],
+    "color": "#e30613"
+  },
+  {
+    "id": "pa_ya",
+    "number": "15",
+    "name": "pa... ya!",
+    "year": "1995",
+    "place": "Arriaga atzekaldea",
+    "txupineras": ["Arantza Garbayo (1999)", "Itsasne Nuñez (2019)"],
+    "color": "#1e2568"
+  },
+  {
+    "id": "pinpilipauxa",
+    "number": "16",
+    "name": "pinpilipauxa",
+    "year": "1978",
+    "place": "Tingladoak",
+    "txupineras": ["Maite Pérez (2003)", "Izaskun Pinedo (2023)"],
+    "color": "#276ea9"
+  },
+  {
+    "id": "piztiak",
+    "number": "17",
+    "name": "piztiak",
+    "year": "2013",
+    "place": "San Nikolas",
+    "txupineras": ["Loreto Errasti (2014)"],
+    "color": "#1d1d1b"
+  },
+  {
+    "id": "satorrak",
+    "number": "18",
+    "name": "satorrak",
+    "year": "1978",
+    "place": "Kaialde",
+    "txupineras": ["Lurdes Luke (2002)"],
+    "color": "#ffdd00"
+  },
+  {
+    "id": "sinkuartel",
+    "number": "19",
+    "name": "sinkuartel",
+    "year": "1996",
+    "place": "Triangune",
+    "txupineras": ["Marta Gerrikabeitia (2006)"],
+    "color": "#342978"
+  },
+  {
+    "id": "tintigorri",
+    "number": "20",
+    "name": "tintigorri",
+    "year": "1978",
+    "place": "San Nikolas",
+    "txupineras": ["Aitziber Adell Ateca (2005)", "Iratxe Palacios Gara (2022)", "Ameli Jauregizar (2005)"],
+    "color": "#80123c"
+  },
+  {
+    "id": "trikimailu",
+    "number": "21",
+    "name": "trikimailu",
+    "year": "2014",
+    "place": "Kaialde",
+    "txupineras": [],
+    "color": "#41c0f0"
+  },
+  {
+    "id": "txinbotarrak",
+    "number": "22",
+    "name": "txinbotarrak",
+    "year": "2006",
+    "place": "Kulturgune",
+    "txupineras": ["Aratz Irazabal (2010)"],
+    "color": "#decae3"
+  },
+  {
+    "id": "txinparta_feminista",
+    "number": "23",
+    "name": "txinparta feminista",
+    "year": "2022",
+    "place": "Arriaga Plaza",
+    "txupineras": [],
+    "color": "#e5007d"
+  },
+  {
+    "id": "txomin_barullo",
+    "number": "24",
+    "name": "txomin barullo",
+    "year": "1978",
+    "place": "Teilape gunea",
+    "txupineras": ["Oihana Pascual (2015)"],
+    "color": "#e4032c"
+  },
+  {
+    "id": "txori_barrote",
+    "number": "25",
+    "name": "txori barrote",
+    "year": "1981",
+    "place": "Euskalgune",
+    "txupineras": ["Jone Artola (2013)"],
+    "color": "#9f951b"
+  },
+  {
+    "id": "uribarri",
+    "number": "26",
+    "name": "uribarri",
+    "year": "1978",
+    "place": "San Nikolas",
+    "txupineras": ["Maria Jesus Agirregoitia (1979)"],
+    "color": "#0075bf"
+  },
+  {
+    "id": "zaratas",
+    "number": "27",
+    "name": "zaratas",
+    "year": "2006",
+    "place": "Areatza",
+    "txupineras": ["Nerea Orizaola (2012)"],
+    "color": "#ee7a9d"
+  }
+]
