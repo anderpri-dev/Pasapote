@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -22,7 +24,10 @@ fun KonpartsaCarousel(
     modifier: Modifier = Modifier,
     viewModel: KonpartsaViewModel = hiltViewModel()
 ) {
-
+    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        viewModel.initKonpartsak(context)
+    }
     val konpartsak = viewModel.konpartsak.collectAsState().value
 
     val pagerState = rememberPagerState(

@@ -12,5 +12,4 @@ data class KonpartsaEntity(
     val place: String,
     val txupineras: String,
     val color: String,
-    val imagePath: String? = null,
 )

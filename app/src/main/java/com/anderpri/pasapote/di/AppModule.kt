@@ -1,6 +1,7 @@
 package com.anderpri.pasapote.di
 
 import com.anderpri.pasapote.data.local.dao.KonpartsaDao
+import com.anderpri.pasapote.data.local.dao.KonpartsaImageDao
 import com.anderpri.pasapote.data.repository.KonpartsaRepositoryImpl
 import com.anderpri.pasapote.domain.repository.KonpartsaRepository
 import dagger.Module
@@ -15,6 +16,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideKonpartsaRepository(dao: KonpartsaDao): KonpartsaRepository =
-        KonpartsaRepositoryImpl(dao)
+    fun provideKonpartsaRepository(
+        dao: KonpartsaDao,
+        imageDao: KonpartsaImageDao
+    ): KonpartsaRepository =
+        KonpartsaRepositoryImpl(dao, imageDao)
 }

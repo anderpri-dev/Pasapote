@@ -5,5 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface KonpartsaRepository {
     fun getAllKonpartsak(): Flow<List<Konpartsa>>
-    suspend fun updateKonpartsa(konpartsa: Konpartsa)
+    fun getAllKonpartsakInYear(year: String): Flow<List<Konpartsa>>
+    suspend fun insertAll(konpartsak: List<Konpartsa>)
+    suspend fun insertKonpartsaImage(konpartsaId: String, year: String, imageUrl: String)
 }

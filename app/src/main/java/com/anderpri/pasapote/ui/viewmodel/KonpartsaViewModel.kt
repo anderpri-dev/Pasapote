@@ -3,6 +3,7 @@ package com.anderpri.pasapote.ui.viewmodel
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.compose.ui.graphics.layer.GraphicsLayer
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -30,15 +32,25 @@ class KonpartsaViewModel @Inject constructor(
         repository.getAllKonpartsak()
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    fun updateKonpartsa(konpartsa: Konpartsa) {
-        viewModelScope.launch { repository.updateKonpartsa(konpartsa) }
+    fun initKonpartsak(context: Context) {
+        val current = konpartsak.value
+        if (current.isEmpty()) {
+            viewModelScope.launch {
+                val json = context.assets.open("konpartsak.json").bufferedReader().use { it.readText() }
+                val konpartsak = Json.decodeFromString<List<Konpartsa>>(json)
+                repository.insertAll(konpartsak)
+            }
+        }
     }
 
     fun onImageSelected(konpartsa: Konpartsa, uri: Uri, context: Context) {
         viewModelScope.launch {
             val path = saveImageToInternalStorage(uri, konpartsa.id, context)
-            val updatedKonpartsa = konpartsa.copy(imagePath = path)
-            repository.updateKonpartsa(updatedKonpartsa)
+            repository.insertKonpartsaImage(
+                konpartsaId = konpartsa.id,
+                year = konpartsa.year,
+                imageUrl = path
+            )
         }
     }
 
@@ -52,25 +64,6 @@ class KonpartsaViewModel @Inject constructor(
         outputStream.close()
         return file.absolutePath
     }
-
-    fun shareImage(imagePath: String, context: Context) {
-        val file = File(imagePath)
-        val uri = FileProvider.getUriForFile(
-            context,
-            "${context.packageName}.fileprovider",
-            file
-        )
-        val shareIntent = Intent(Intent.ACTION_SEND).apply {
-            type = "image/jpeg"
-            putExtra(Intent.EXTRA_STREAM, uri)
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        }
-        context.startActivity(
-            Intent.createChooser(shareIntent, "Compartir imagen")
-        )
-    }
-
-    // share instagram
 
     fun shareToInstagram(
         graphicsLayer: GraphicsLayer,
