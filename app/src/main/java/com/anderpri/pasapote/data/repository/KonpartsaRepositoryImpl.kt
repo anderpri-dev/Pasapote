@@ -40,4 +40,8 @@ class KonpartsaRepositoryImpl(
     override suspend fun insertKonpartsaImage(konpartsaId: String, year: String, imageUrl: String) {
         imageDao.insert(KonpartsaImageEntity(konpartsaId = konpartsaId, year = year, imageUrl = imageUrl))
     }
+
+    override suspend fun deleteKonpartsaImage(konpartsaId: String, year: String) {
+        imageDao.deleteByKonpartsaIdAndYear(konpartsaId, year)
+    }
 }

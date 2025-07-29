@@ -2,4 +2,9 @@
     <string name="app_name">Pasapote</string>
     <string name="partekatu">Partekatu</string>
     <string name="ezabatu">Ezabatu</string>
+    <string name="bai">Bai</string>
+    <string name="ez">Ez</string>
+    <string name="alert_ezabatu_title">Argazkia ezabatu?</string>
+    <string name="alert_ezabatu_subtitle">Ziur zaude argazkia pasapotetik ezabatu nahi duzula?</string>
+    <string name="utzi">Utzi</string>
 </resources>

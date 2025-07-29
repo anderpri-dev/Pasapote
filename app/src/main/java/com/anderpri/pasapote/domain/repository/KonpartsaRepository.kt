@@ -8,4 +8,5 @@ interface KonpartsaRepository {
     fun getAllKonpartsakInYear(year: String): Flow<List<Konpartsa>>
     suspend fun insertAll(konpartsak: List<Konpartsa>)
     suspend fun insertKonpartsaImage(konpartsaId: String, year: String, imageUrl: String)
+    suspend fun deleteKonpartsaImage(konpartsaId: String, year: String)
 }
