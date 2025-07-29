@@ -18,7 +18,7 @@ fun OverlayEsteka() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(vertical = 24.dp),
+            .padding(vertical = 48.dp),
         contentAlignment = Alignment.BottomCenter
     ) {
         Text(
