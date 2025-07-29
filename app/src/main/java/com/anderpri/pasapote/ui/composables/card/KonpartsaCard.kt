@@ -117,6 +117,9 @@ fun KonpartsaCard(
             onDismiss = { showFullScreen = false },
             onShareToInstagram = { graphicsLayer ->
                 viewModel.shareToInstagram(graphicsLayer, context, coroutineScope)
+            },
+            onDelete = {
+                // Irudia ezabatu
             }
         )
     }
