@@ -7,4 +7,7 @@
     <string name="alert_ezabatu_title">Argazkia ezabatu?</string>
     <string name="alert_ezabatu_subtitle">Ziur zaude argazkia pasapotetik ezabatu nahi duzula?</string>
     <string name="utzi">Utzi</string>
+    <string name="aukeratu_iturria">Aukeratu irudiaren iturria</string>
+    <string name="galeria">Galeria</string>
+    <string name="kamera">Kamera</string>
 </resources>

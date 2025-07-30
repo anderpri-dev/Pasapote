@@ -1,5 +1,6 @@
 package com.anderpri.pasapote.ui.composables.card
 
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -19,6 +20,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,18 +33,24 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.FileProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.anderpri.pasapote.R
 import com.anderpri.pasapote.domain.model.Konpartsa
 import com.anderpri.pasapote.ui.composables.overlay.DialogFullScreenImageOverlay
 import com.anderpri.pasapote.ui.theme.AppRed
 import com.anderpri.pasapote.ui.viewmodel.KonpartsaViewModel
+import java.io.File
 
 @Composable
 fun KonpartsaCard(
-    konpartsa: Konpartsa,
+    konpartsaId: String,
     viewModel: KonpartsaViewModel = hiltViewModel(),
 ) {
+    val konpartsak = viewModel.konpartsak.collectAsState()
+    val konpartsa = konpartsak.value.find { it.id == konpartsaId }
+        ?: return
+
     val context = LocalContext.current
     val imagePath = konpartsa.imagePath
     var showFullScreen by remember { mutableStateOf(false) }
@@ -53,6 +61,17 @@ fun KonpartsaCard(
     ) {
         it?.let {
             viewModel.onImageSelected(konpartsa, it, context)
+        }
+    }
+
+    var showImageSourceDialog by remember { mutableStateOf(false) }
+    var cameraImageUri by remember { mutableStateOf<Uri?>(null) }
+
+    val cameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture()
+    ) { success ->
+        if (success) {
+            cameraImageUri?.let { viewModel.onImageSelected(konpartsa, it, context) }
         }
     }
 
@@ -105,7 +124,7 @@ fun KonpartsaCard(
                         imagePath = imagePath,
                         konpartsa = konpartsa,
                         onTap = {
-                            if (imagePath == null) launcher.launch("image/jpeg")
+                            if (imagePath == null) showImageSourceDialog = true
                             else showFullScreen = true
                         },
                         onLongTap = {
@@ -152,6 +171,33 @@ fun KonpartsaCard(
                 Button(onClick = { showDeleteDialog = false }) {
                     Text(stringResource(R.string.utzi))
                 }
+            }
+        )
+    }
+
+    if (showImageSourceDialog) {
+        AlertDialog(
+            onDismissRequest = { showImageSourceDialog = false },
+            text = { Text(stringResource(R.string.aukeratu_iturria)) },
+            confirmButton = {
+                Button(onClick = {
+                    showImageSourceDialog = false
+                    launcher.launch("image/*")
+                }) { Text(stringResource(R.string.galeria)) }
+            },
+            dismissButton = {
+                Button(onClick = {
+                    showImageSourceDialog = false
+                    val file = File(context.cacheDir, "camera_image.jpg")
+                    cameraImageUri = FileProvider.getUriForFile(
+                        context,
+                        "${context.packageName}.fileprovider",
+                        file
+                    )
+                    cameraImageUri?.let {
+                        cameraLauncher.launch(it)
+                    }
+                }) { Text(stringResource(R.string.kamera)) }
             }
         )
     }

@@ -39,7 +39,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun KonpartsaCarousel(
-    modifier: Modifier = Modifier,
+    paddingValues: PaddingValues,
     viewModel: KonpartsaViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -55,14 +55,15 @@ fun KonpartsaCarousel(
     )
 
     Column(
-        modifier = modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize()
+            .padding(paddingValues)
     ) {
         HorizontalPager(
             state = pagerState,
             contentPadding = PaddingValues(horizontal = 30.dp, vertical = 20.dp),
             pageSpacing = 10.dp,
             modifier = Modifier.weight(1f)
-        ) { KonpartsaCard(konpartsa = konpartsak[it]) }
+        ) { KonpartsaCard(konpartsaId = konpartsak[it].id) }
         KonpartsaSlider(konpartsak, pagerState)
     }
 }
@@ -119,25 +120,4 @@ private fun KonpartsaSlider(
             )
         }
     }
-}
-
-
-@Preview
-@Composable
-fun CarouselCardPreview() {
-    PasapoteTheme {
-        val konpartsa = Konpartsa(
-            id = "1",
-            number = "1",
-            name = "Konpartsa ",
-            color = "#FF5733",
-            year = "TODO()",
-            place = "TODO()",
-            txupineras = listOf("TODO()")
-        )
-        KonpartsaCard(
-            konpartsa
-        )
-    }
-
 }
