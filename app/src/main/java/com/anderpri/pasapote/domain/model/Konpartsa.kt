@@ -11,5 +11,7 @@ data class Konpartsa(
     val place: String,
     val txupineras: List<String>,
     val color: String,
+    val posX: Float,
+    val posY: Float,
     val imagePath: String? = null,
 )

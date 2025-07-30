@@ -1,9 +1,7 @@
-package com.anderpri.pasapote.ui.composables
+package com.anderpri.pasapote.ui.composables.mapa
 
-import android.R.attr.contentDescription
 import android.annotation.SuppressLint
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -31,56 +29,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil3.compose.AsyncImage
-import coil3.compose.AsyncImagePainter.State.Empty.painter
 import com.anderpri.pasapote.R
 import com.anderpri.pasapote.domain.model.Konpartsa
 import com.anderpri.pasapote.ui.composables.card.KonpartsaCard
 import com.anderpri.pasapote.ui.viewmodel.KonpartsaViewModel
-
-data class Position(
-    val id: String,
-    val posX: Float,
-    val posY: Float
-)
-
-val positionsList: List<Position> =
-    listOf(
-        Position("aixeberri", 0.72f, 0.80f),
-        Position("algara", 0.21f, 0.64f),
-        Position("altxaporrue", 0.51f, 0.65f),
-        Position("askapena", 0.28f, 0.77f),
-        Position("bizizaleak", 0.85f, 0.55f),
-        Position("eguzkizaleak", 0.69f, 0.61f),
-        Position("hau_pittu_hau", 0.62f, 0.60f),
-        Position("hontzak", 0.84f, 0.43f),
-        Position("hor_dago_abante", 0.87f, 0.36f),
-        Position("kaixo", 0.25f, 0.85f),
-        Position("kaskagorri", 0.13f, 0.81f),
-        Position("kranba", 0.83f, 0.79f),
-        Position("mekaguen", 0.83f, 0.62f),
-        Position("moskotarrak", 0.46f, 0.69f),
-        Position("pa_ya", 0.20f, 0.79f),
-        Position("pinpilipauxa", 0.81f, 0.47f),
-        Position("piztiak", 0.79f, 0.83f),
-        Position("satorrak", 0.74f, 0.54f),
-        Position("sinkuartel", 0.80f, 0.58f),
-        Position("tintigorri", 0.81f, 0.92f),
-        Position("trikimailu", 0.78f, 0.51f),
-        Position("txinbotarrak", 0.57f, 0.63f),
-        Position("txinparta_feminista", 0.36f, 0.74f),
-        Position("txomin_barullo", 0.89f, 0.30f),
-        Position("txori_barrote", 0.68f, 0.57f),
-        Position("uribarri", 0.76f, 0.88f),
-        Position("zaratas", 0.78f, 0.68f),
-    )
-
 
 @Composable
 fun KonpartsaMapScreen(
@@ -158,17 +116,12 @@ private fun MapaPuntuak(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        konpartsak.take(positionsList.size).forEachIndexed { index, konpartsa ->
+        konpartsak.take(konpartsak.size).forEachIndexed { index, konpartsa ->
             //val (posX, posY) = positions[index]
-            val position = positionsList.firstOrNull { it.id == konpartsa.id }
+            //val position = positionsList.firstOrNull { it.id == konpartsa.id }
 
-            if (position == null) {
-                Log.w("KonpartsaMapScreen", "Position not found for konpartsa: ${konpartsa.id}")
-                return@forEachIndexed
-            }
-
-            val posX = position.posX
-            val posY = position.posY
+            val posX = konpartsa.posX
+            val posY = konpartsa.posY
 
             val density = LocalDensity.current
             val offsetX = with(density) { (posX * boxWidth).toDp() }

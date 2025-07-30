@@ -6,7 +6,9 @@
     "year": "1996",
     "place": "Areatza",
     "txupineras": ["Sonia Charcán (1997)", "Saioa Domínguez Hormaetxe (2018)"],
-    "color": "#00a1e0"
+    "color": "#00a1e0",
+    "posX": 0.72,
+    "posY": 0.80
   },
   {
     "id": "algara",
@@ -15,7 +17,9 @@
     "year": "1994",
     "place": "Naxa",
     "txupineras": ["Isabel Isazelaia (2008)"],
-    "color": "#0058a5"
+    "color": "#0058a5",
+    "posX": 0.21,
+    "posY": 0.64
   },
   {
     "id": "altxaporrue",
@@ -24,7 +28,9 @@
     "year": "2004",
     "place": "Kulturgune",
     "txupineras": ["Larraitz Cisneros (2007)"],
-    "color": "#e7421c"
+    "color": "#e7421c",
+    "posX": 0.51,
+    "posY": 0.66
   },
   {
     "id": "askapena",
@@ -33,7 +39,9 @@
     "year": "1991",
     "place": "",
     "txupineras": ["Begoña Benedicto (2004)", "Ane Ortiz Ballesteros (2017)"],
-    "color": "#a2c43b"
+    "color": "#a2c43b",
+    "posX": 0.28,
+    "posY": 0.77
   },
   {
     "id": "bizizaleak",
@@ -42,7 +50,9 @@
     "year": "1978",
     "place": "Triangune",
     "txupineras": ["Eva Dolado (1990)"],
-    "color": "#49ad33"
+    "color": "#49ad33",
+    "posX": 0.85,
+    "posY": 0.54
   },
   {
     "id": "eguzkizaleak",
@@ -51,7 +61,9 @@
     "year": "1989",
     "place": "",
     "txupineras": ["Sonia Polo (2009)"],
-    "color": "#f09529"
+    "color": "#f09529",
+    "posX": 0.70,
+    "posY": 0.62
   },
   {
     "id": "hau_pittu_hau",
@@ -60,7 +72,9 @@
     "year": "1987",
     "place": "Euskalgune",
     "txupineras": ["Miren Barrutia (1991)"],
-    "color": "#681f79"
+    "color": "#681f79",
+    "posX": 0.62,
+    "posY": 0.60
   },
   {
     "id": "hontzak",
@@ -69,7 +83,9 @@
     "year": "1978",
     "place": "Tingladoak",
     "txupineras": ["Sandra Guzmán (1995)"],
-    "color": "#e8431d"
+    "color": "#e8431d",
+    "posX": 0.86,
+    "posY": 0.43
   },
   {
     "id": "hor_dago_abante",
@@ -78,7 +94,9 @@
     "year": "1993",
     "place": "Teilape gunea",
     "txupineras": ["Arantza de Jesús (1996)"],
-    "color": "#dede48"
+    "color": "#dede48",
+    "posX": 0.89,
+    "posY": 0.36
   },
   {
     "id": "kaixo",
@@ -87,7 +105,9 @@
     "year": "1981",
     "place": "Arriaga atzekaldea",
     "txupineras": ["Montserrat Valerio (1981)"],
-    "color": "#0c65af"
+    "color": "#0c65af",
+    "posX": 0.25,
+    "posY": 0.85
   },
   {
     "id": "kaskagorri",
@@ -96,7 +116,9 @@
     "year": "1989",
     "place": "Arriaga atzekaldea",
     "txupineras": ["Montserrat Valerio (1990)"],
-    "color": "#a42422"
+    "color": "#a42422",
+    "posX": 0.13,
+    "posY": 0.81
   },
   {
     "id": "kranba",
@@ -105,7 +127,9 @@
     "year": "2008",
     "place": "Piratagune",
     "txupineras": ["Gisèle Felli Gorritxo (2016)"],
-    "color": "#ef7d00"
+    "color": "#ef7d00",
+    "posX": 0.83,
+    "posY": 0.79
   },
   {
     "id": "mekaguen",
@@ -114,7 +138,9 @@
     "year": "1991",
     "place": "Triangune",
     "txupineras": ["Patricia Lezama (2011)"],
-    "color": "#13a538"
+    "color": "#13a538",
+    "posX": 0.83,
+    "posY": 0.62
   },
   {
     "id": "moskotarrak",
@@ -123,7 +149,9 @@
     "year": "1978",
     "place": "Areatza kaia",
     "txupineras": ["Anabel Fernández Pareda (1982)"],
-    "color": "#e30613"
+    "color": "#e30613",
+    "posX": 0.46,
+    "posY": 0.69
   },
   {
     "id": "pa_ya",
@@ -132,7 +160,9 @@
     "year": "1995",
     "place": "Arriaga atzekaldea",
     "txupineras": ["Arantza Garbayo (1999)", "Itsasne Nuñez (2019)"],
-    "color": "#1e2568"
+    "color": "#1e2568",
+    "posX": 0.20,
+    "posY": 0.79
   },
   {
     "id": "pinpilipauxa",
@@ -141,7 +171,9 @@
     "year": "1978",
     "place": "Tingladoak",
     "txupineras": ["Maite Pérez (2003)", "Izaskun Pinedo (2023)"],
-    "color": "#276ea9"
+    "color": "#276ea9",
+    "posX": 0.83,
+    "posY": 0.47
   },
   {
     "id": "piztiak",
@@ -150,7 +182,9 @@
     "year": "2013",
     "place": "San Nikolas",
     "txupineras": ["Loreto Errasti (2014)"],
-    "color": "#1d1d1b"
+    "color": "#1d1d1b",
+    "posX": 0.79,
+    "posY": 0.83
   },
   {
     "id": "satorrak",
@@ -159,7 +193,9 @@
     "year": "1978",
     "place": "Kaialde",
     "txupineras": ["Lurdes Luke (2002)"],
-    "color": "#ffdd00"
+    "color": "#ffdd00",
+    "posX": 0.74,
+    "posY": 0.54
   },
   {
     "id": "sinkuartel",
@@ -168,7 +204,9 @@
     "year": "1996",
     "place": "Triangune",
     "txupineras": ["Marta Gerrikabeitia (2006)"],
-    "color": "#342978"
+    "color": "#342978",
+    "posX": 0.80,
+    "posY": 0.58
   },
   {
     "id": "tintigorri",
@@ -177,7 +215,9 @@
     "year": "1978",
     "place": "San Nikolas",
     "txupineras": ["Aitziber Adell Ateca (2005)", "Iratxe Palacios Gara (2022)", "Ameli Jauregizar (2005)"],
-    "color": "#80123c"
+    "color": "#80123c",
+    "posX": 0.81,
+    "posY": 0.92
   },
   {
     "id": "trikimailu",
@@ -186,7 +226,9 @@
     "year": "2014",
     "place": "Kaialde",
     "txupineras": [],
-    "color": "#41c0f0"
+    "color": "#41c0f0",
+    "posX": 0.78,
+    "posY": 0.51
   },
   {
     "id": "txinbotarrak",
@@ -195,7 +237,9 @@
     "year": "2006",
     "place": "Kulturgune",
     "txupineras": ["Aratz Irazabal (2010)"],
-    "color": "#decae3"
+    "color": "#decae3",
+    "posX": 0.57,
+    "posY": 0.63
   },
   {
     "id": "txinparta_feminista",
@@ -204,7 +248,9 @@
     "year": "2022",
     "place": "Arriaga Plaza",
     "txupineras": [],
-    "color": "#e5007d"
+    "color": "#e5007d",
+    "posX": 0.36,
+    "posY": 0.74
   },
   {
     "id": "txomin_barullo",
@@ -213,7 +259,9 @@
     "year": "1978",
     "place": "Teilape gunea",
     "txupineras": ["Oihana Pascual (2015)"],
-    "color": "#e4032c"
+    "color": "#e4032c",
+    "posX": 0.90,
+    "posY": 0.30
   },
   {
     "id": "txori_barrote",
@@ -222,7 +270,9 @@
     "year": "1981",
     "place": "Euskalgune",
     "txupineras": ["Jone Artola (2013)"],
-    "color": "#9f951b"
+    "color": "#9f951b",
+    "posX": 0.68,
+    "posY": 0.57
   },
   {
     "id": "uribarri",
@@ -231,7 +281,9 @@
     "year": "1978",
     "place": "San Nikolas",
     "txupineras": ["Maria Jesus Agirregoitia (1979)"],
-    "color": "#0075bf"
+    "color": "#0075bf",
+    "posX": 0.76,
+    "posY": 0.88
   },
   {
     "id": "zaratas",
@@ -240,6 +292,8 @@
     "year": "2006",
     "place": "Areatza",
     "txupineras": ["Nerea Orizaola (2012)"],
-    "color": "#ee7a9d"
+    "color": "#ee7a9d",
+    "posX": 0.78,
+    "posY": 0.68
   }
 ]

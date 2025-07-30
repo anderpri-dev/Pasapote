@@ -12,4 +12,6 @@ data class KonpartsaEntity(
     val place: String,
     val txupineras: String,
     val color: String,
+    val posX: Float,
+    val posY: Float
 )

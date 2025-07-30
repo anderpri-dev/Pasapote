@@ -8,7 +8,7 @@ import com.anderpri.pasapote.data.local.dao.KonpartsaImageDao
 import com.anderpri.pasapote.data.local.entity.KonpartsaEntity
 import com.anderpri.pasapote.data.local.entity.KonpartsaImageEntity
 
-@Database(entities = [KonpartsaEntity::class, KonpartsaImageEntity::class], version = 1)
+@Database(entities = [KonpartsaEntity::class, KonpartsaImageEntity::class], version = 2)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun konpartsaDao(): KonpartsaDao
