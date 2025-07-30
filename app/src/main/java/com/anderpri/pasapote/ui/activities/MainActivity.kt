@@ -6,10 +6,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.padding
-import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
+import com.anderpri.pasapote.ui.navigation.ApplicationNavigation
 import com.anderpri.pasapote.ui.screens.AppDrawer
-import com.anderpri.pasapote.ui.screens.KonpartsaCarousel
 import com.anderpri.pasapote.ui.theme.PasapoteTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,10 +21,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PasapoteTheme {
-                AppDrawer {
-                    KonpartsaCarousel(
-                        modifier = Modifier.Companion.padding(it)
-                    )
+                val navController = rememberNavController()
+                AppDrawer(navController) { paddingValues ->
+                    ApplicationNavigation(navController, paddingValues)
                 }
             }
         }
