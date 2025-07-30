@@ -32,8 +32,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -63,6 +63,7 @@ fun AppDrawer(
     }
 
     var selectedItem by rememberSaveable { mutableStateOf("home") }
+    var titleResId by rememberSaveable { mutableIntStateOf(R.string.app_name) }
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -91,7 +92,11 @@ fun AppDrawer(
                                         .height(80.dp)
                                         .width(80.dp)
                                         .clip(CircleShape)
-                                        .border(3.dp, MaterialTheme.colorScheme.primary, CircleShape),
+                                        .border(
+                                            3.dp,
+                                            MaterialTheme.colorScheme.primary,
+                                            CircleShape
+                                        ),
                                     contentScale = ContentScale.Fit
                                 )
                                 Spacer(Modifier.height(8.dp))
@@ -123,19 +128,44 @@ fun AppDrawer(
                     NavigationDrawerItem(
                         label = {
                             Text(
-                                "Mapa ----",
+                                stringResource(R.string.mapa),
                                 style = MaterialTheme.typography.titleSmall
                             ) },
-                        selected = selectedItem == "map",
+                        selected = navController.currentDestination?.route == "map",
                         icon = { Icon(Icons.Outlined.Close, contentDescription = null) },
                         onClick = {
                             scope.launch {
-                                if (drawerState.isOpen) drawerState.close()
-                                selectedItem == "map"
                                 navController.navigate("map") {
+                                    popUpTo("home") { inclusive = false }
                                     launchSingleTop = true
                                     restoreState = true
                                 }
+                                titleResId = R.string.mapa
+                                if (drawerState.isOpen) drawerState.close()
+                                selectedItem == "map"
+                            }
+                        },
+                    )
+
+                    // Lista
+                    NavigationDrawerItem(
+                        label = {
+                            Text(
+                                stringResource(R.string.konpartsen_lista),
+                                style = MaterialTheme.typography.titleSmall
+                            ) },
+                        selected = navController.currentDestination?.route == "list",
+                        icon = { Icon(Icons.Outlined.Close, contentDescription = null) },
+                        onClick = {
+                            scope.launch {
+                                navController.navigate("list") {
+                                    popUpTo("home") { inclusive = false }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                                titleResId = R.string.konpartsen_lista
+                                if (drawerState.isOpen) drawerState.close()
+                                selectedItem == "list"
                             }
                         },
                     )
@@ -150,7 +180,7 @@ fun AppDrawer(
                 TopAppBar(
                     title = {
                         Text(
-                            stringResource(R.string.app_name),
+                            stringResource(titleResId),
                             style = MaterialTheme.typography.titleLarge
                         )
                     },

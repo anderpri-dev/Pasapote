@@ -1,7 +1,6 @@
-package com.anderpri.pasapote.ui.composables.mapa
+package com.anderpri.pasapote.ui.screens
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -90,11 +89,10 @@ private fun MapaComposable(
 
 
         MapaPuntuak(
-            konpartsak,
-            boxWidth,
-            boxHeight,
-            paddingValues,
-            onDraw = { onDraw() }
+            konpartsak = konpartsak,
+            boxWidth = boxWidth,
+            boxHeight = boxHeight,
+            paddingValues = paddingValues,
         )
 
     }
@@ -106,7 +104,6 @@ private fun MapaPuntuak(
     boxWidth: Float,
     boxHeight: Float,
     paddingValues: PaddingValues,
-    onDraw: () -> Unit
 ) {
 
 
@@ -117,18 +114,9 @@ private fun MapaPuntuak(
             .fillMaxSize()
     ) {
         konpartsak.take(konpartsak.size).forEachIndexed { index, konpartsa ->
-            //val (posX, posY) = positions[index]
-            //val position = positionsList.firstOrNull { it.id == konpartsa.id }
-
-            val posX = konpartsa.posX
-            val posY = konpartsa.posY
-
             val density = LocalDensity.current
-            val offsetX = with(density) { (posX * boxWidth).toDp() }
-            val offsetY = with(density) { (posY * boxHeight).toDp() }
-            Log.d("KonpartsaMapScreen", "Offset in dp: ($offsetX, $offsetY)")
-
-
+            val offsetX = with(density) { (konpartsa.posX * boxWidth).toDp() }
+            val offsetY = with(density) { (konpartsa.posY * boxHeight).toDp() }
             Box(
                 modifier = Modifier
                     .absoluteOffset(x = offsetX - 20.dp, y = offsetY - 20.dp)

@@ -110,4 +110,7 @@ dependencies {
 
     // Firebase Crashlytics
     implementation(libs.firebase.crashlytics)
+
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
 }

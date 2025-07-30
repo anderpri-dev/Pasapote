@@ -10,4 +10,9 @@
     <string name="aukeratu_iturria">Aukeratu irudiaren iturria</string>
     <string name="galeria">Galeria</string>
     <string name="kamera">Kamera</string>
+    <string name="sorte_data">Sorte data:</string>
+    <string name="kokalekua">Kokalekua:</string>
+    <string name="txupinerak">Txupinerak:</string>
+    <string name="mapa">Mapa</string>
+    <string name="konpartsen_lista">Konpartsen lista</string>
 </resources>
