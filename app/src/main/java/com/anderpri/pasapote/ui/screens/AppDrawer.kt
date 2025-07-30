@@ -14,9 +14,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import com.anderpri.pasapote.R
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -63,6 +64,7 @@ fun AppDrawer(
     var selectedItem by rememberSaveable { mutableStateOf("home") }
     var titleResId by rememberSaveable { mutableIntStateOf(R.string.app_name) }
 
+
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet {
@@ -71,105 +73,89 @@ fun AppDrawer(
                         .padding(horizontal = 16.dp)
                         .verticalScroll(rememberScrollState())
                 ) {
-                    Spacer(Modifier.height(12.dp))
 
-                    NavigationDrawerItem(
-                        label = {
-                            Column(
-                                modifier = Modifier
-                                    .padding(16.dp)
-                                    .align(Alignment.CenterHorizontally)
-                                    .fillMaxWidth(),
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                AsyncImage(
-                                    model = R.drawable.pasapote,
-                                    contentDescription = null,
-                                    placeholder = painterResource(R.drawable.pasapote),
-                                    modifier = Modifier
-                                        .height(80.dp)
-                                        .width(80.dp)
-                                        .clip(CircleShape)
-                                        .border(
-                                            3.dp,
-                                            MaterialTheme.colorScheme.primary,
-                                            CircleShape
-                                        ),
-                                    contentScale = ContentScale.Fit
-                                )
-                                Spacer(Modifier.height(8.dp))
-                                Text(
-                                    stringResource(R.string.app_name),
-                                    style = MaterialTheme.typography.titleLarge
-                                )
-                            }
-                        },
-                        selected = false,
-                        icon = null,
-                        onClick = {
-                            scope.launch {
-                                if (drawerState.isOpen) drawerState.close()
-                                navController.navigate("home") {
-                                    popUpTo(navController.graph.startDestinationId) {
-                                        inclusive = true
-                                        saveState = false
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = false
-                                }
-                                selectedItem == "home"
-                            }
-                        }
+                    //Spacer(Modifier.height(12.dp))
+
+                    Column(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .align(Alignment.CenterHorizontally)
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        AsyncImage(
+                            model = R.drawable.pasapote,
+                            contentDescription = null,
+                            placeholder = painterResource(R.drawable.pasapote),
+                            modifier = Modifier
+                                .height(80.dp)
+                                .width(80.dp)
+                                .clip(CircleShape)
+                                .border(
+                                    3.dp,
+                                    MaterialTheme.colorScheme.primary,
+                                    CircleShape
+                                ),
+                            contentScale = ContentScale.Fit
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        Text(
+                            stringResource(R.string.app_name),
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                    }
+
+                    // Items of the drawer
+                    val currentRoute = navController.currentDestination?.route
+
+                    // Pasapotea
+                    CustomDrawerItem(
+                        textResId = R.string.pasapotea,
+                        iconResId = R.drawable.album_outline,
+                        route = "home",
+                        currentRoute = currentRoute
+                    ) {
+                        onClickItem(
+                            navController = navController,
+                            route = "home",
+                            setTitle = { titleResId = R.string.pasapotea },
+                            closeDrawer = { scope.launch { if (drawerState.isOpen) drawerState.close() }}
+                        )
+                    }
+
+                    HorizontalDivider(
+                        modifier = Modifier.padding(vertical = 8.dp)
                     )
 
                     // Mapa
-                    NavigationDrawerItem(
-                        label = {
-                            Text(
-                                stringResource(R.string.mapa),
-                                style = MaterialTheme.typography.titleSmall
-                            )
-                        },
-                        selected = navController.currentDestination?.route == "map",
-                        icon = { Icon(Icons.Outlined.Close, contentDescription = null) },
-                        onClick = {
-                            scope.launch {
-                                navController.navigate("map") {
-                                    popUpTo("home") { inclusive = false }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
-                                titleResId = R.string.mapa
-                                if (drawerState.isOpen) drawerState.close()
-                                selectedItem == "map"
-                            }
-                        },
-                    )
+                    CustomDrawerItem(
+                        textResId = R.string.mapa,
+                        iconResId = R.drawable.map_outline,
+                        route = "map",
+                        currentRoute = currentRoute
+                    ) {
+                        onClickItem(
+                            navController = navController,
+                            route = "map",
+                            setTitle = { titleResId = R.string.mapa },
+                            closeDrawer = { scope.launch { if (drawerState.isOpen) drawerState.close() }}
+                        )
+                    }
 
                     // Lista
-                    NavigationDrawerItem(
-                        label = {
-                            Text(
-                                stringResource(R.string.konpartsen_lista),
-                                style = MaterialTheme.typography.titleSmall
-                            )
-                        },
-                        selected = navController.currentDestination?.route == "list",
-                        icon = { Icon(Icons.Outlined.Close, contentDescription = null) },
-                        onClick = {
-                            scope.launch {
-                                navController.navigate("list") {
-                                    popUpTo("home") { inclusive = false }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
-                                titleResId = R.string.konpartsen_lista
-                                if (drawerState.isOpen) drawerState.close()
-                                selectedItem == "list"
-                            }
-                        },
-                    )
-
+                    CustomDrawerItem(
+                        textResId = R.string.konpartsen_lista,
+                        iconResId = R.drawable.list,
+                        route = "list",
+                        currentRoute = currentRoute
+                    ) {
+                        onClickItem(
+                            navController = navController,
+                            route = "list",
+                            setTitle = { titleResId = R.string.konpartsen_lista },
+                            closeDrawer = { scope.launch { if (drawerState.isOpen) drawerState.close() }}
+                        )
+                    }
                 }
             }
         },
@@ -210,4 +196,31 @@ fun AppDrawer(
             content(innerPadding)
         }
     }
+}
+
+@Composable
+fun CustomDrawerItem(textResId: Int, iconResId: Int, route: String, currentRoute: String?, onClick: () -> Unit) {
+    NavigationDrawerItem(
+        label = {
+            Text(
+                stringResource(textResId),
+                style = MaterialTheme.typography.titleSmall
+            )
+        },
+        selected = currentRoute == route,
+        icon = { Icon(painterResource(iconResId), contentDescription = null) },
+        onClick = {
+            onClick()
+        },
+    )
+}
+
+fun onClickItem(navController: NavHostController, route: String, setTitle: () -> Unit, closeDrawer: () -> Job) {
+    navController.navigate(route) {
+        popUpTo("home") { inclusive = true }
+        launchSingleTop = true
+        restoreState = true
+    }
+    setTitle()
+    closeDrawer()
 }
