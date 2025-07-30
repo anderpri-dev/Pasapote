@@ -10,9 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.anderpri.pasapote.ui.screens.KonpartsaCarousel
 import com.anderpri.pasapote.ui.screens.KonpartsaListaScreen
 import com.anderpri.pasapote.ui.screens.KonpartsaMapScreen
-import com.anderpri.pasapote.ui.screens.KonpartsaCarousel
 
 @Composable
 fun ApplicationNavigation(navController: NavHostController, paddingValues: PaddingValues) {

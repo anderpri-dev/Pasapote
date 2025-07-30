@@ -34,7 +34,8 @@ class KonpartsaViewModel @Inject constructor(
         val current = konpartsak.value
         if (current.isEmpty()) {
             viewModelScope.launch {
-                val json = context.assets.open("konpartsak.json").bufferedReader().use { it.readText() }
+                val json = context.assets.open("konpartsak.json")
+                    .bufferedReader().use { it.readText() }
                 val konpartsak = Json.decodeFromString<List<Konpartsa>>(json)
                 repository.insertAll(konpartsak)
             }

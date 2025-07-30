@@ -139,8 +139,8 @@ private fun MapaPuntuak(
                 Box(
                     modifier = Modifier
                         .padding(paddingValues = paddingValues)
-                        .aspectRatio(9f/16f)
-                ){
+                        .aspectRatio(9f / 16f)
+                ) {
                     KonpartsaCard(konpartsaId = konpartsaId)
                 }
             }

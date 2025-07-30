@@ -1,7 +1,5 @@
 package com.anderpri.pasapote.ui.screens
 
-import android.R.attr.onClick
-import android.net.http.SslCertificate.saveState
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -130,7 +128,8 @@ fun AppDrawer(
                             Text(
                                 stringResource(R.string.mapa),
                                 style = MaterialTheme.typography.titleSmall
-                            ) },
+                            )
+                        },
                         selected = navController.currentDestination?.route == "map",
                         icon = { Icon(Icons.Outlined.Close, contentDescription = null) },
                         onClick = {
@@ -153,7 +152,8 @@ fun AppDrawer(
                             Text(
                                 stringResource(R.string.konpartsen_lista),
                                 style = MaterialTheme.typography.titleSmall
-                            ) },
+                            )
+                        },
                         selected = navController.currentDestination?.route == "list",
                         icon = { Icon(Icons.Outlined.Close, contentDescription = null) },
                         onClick = {

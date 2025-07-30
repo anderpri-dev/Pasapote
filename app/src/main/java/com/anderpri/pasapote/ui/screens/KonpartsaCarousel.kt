@@ -26,13 +26,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.anderpri.pasapote.domain.model.Konpartsa
 import com.anderpri.pasapote.ui.composables.card.KonpartsaCard
 import com.anderpri.pasapote.ui.theme.AppGreen
-import com.anderpri.pasapote.ui.theme.PasapoteTheme
 import com.anderpri.pasapote.ui.viewmodel.KonpartsaViewModel
 import kotlinx.coroutines.launch
 
@@ -55,7 +53,8 @@ fun KonpartsaCarousel(
     )
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .padding(paddingValues)
     ) {
         HorizontalPager(

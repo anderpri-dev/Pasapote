@@ -20,12 +20,10 @@ import androidx.compose.ui.graphics.layer.drawLayer
 import androidx.compose.ui.graphics.rememberGraphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.anderpri.pasapote.R
 import com.anderpri.pasapote.domain.model.Konpartsa
-import com.anderpri.pasapote.ui.theme.PasapoteTheme
 
 @Composable
 fun DialogOverlayImage(konpartsa: Konpartsa, onPainted: (GraphicsLayer) -> Unit) {
@@ -51,7 +49,9 @@ fun DialogOverlayImage(konpartsa: Konpartsa, onPainted: (GraphicsLayer) -> Unit)
             model = konpartsa.imagePath,
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier.aspectRatio(9f / 16f).fillMaxHeight(),
+            modifier = Modifier
+                .aspectRatio(9f / 16f)
+                .fillMaxHeight(),
         )
 
 
@@ -60,7 +60,9 @@ fun DialogOverlayImage(konpartsa: Konpartsa, onPainted: (GraphicsLayer) -> Unit)
             painter = painterResource(id = R.drawable.background),
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier.aspectRatio(9f / 16f).fillMaxHeight(),
+            modifier = Modifier
+                .aspectRatio(9f / 16f)
+                .fillMaxHeight(),
             alpha = 0.2f
         )
 
@@ -86,26 +88,5 @@ fun DialogOverlayImage(konpartsa: Konpartsa, onPainted: (GraphicsLayer) -> Unit)
         }
 
         OverlayEsteka()
-    }
-}
-
-
-@Preview
-@Composable
-fun DialogOverlayImagePreview() {
-    val konpartsa = Konpartsa(
-        id = "1",
-        number = "1",
-        name = "Konpartsa ",
-        color = "#FF5733",
-        year = "TODO()",
-        place = "TODO()",
-        txupineras = listOf("TODO()")
-    )
-    PasapoteTheme {
-        DialogOverlayImage(
-            konpartsa = konpartsa,
-            onPainted = {}
-        )
     }
 }

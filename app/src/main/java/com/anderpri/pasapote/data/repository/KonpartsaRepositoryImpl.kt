@@ -10,21 +10,20 @@ import com.anderpri.pasapote.domain.repository.KonpartsaRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
-import kotlin.collections.map
 
 class KonpartsaRepositoryImpl(
     private val dao: KonpartsaDao,
     private val imageDao: KonpartsaImageDao
 ) : KonpartsaRepository {
 
-    val year : String = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR).toString()
+    val year: String = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR).toString()
 
     override fun getAllKonpartsak(): Flow<List<Konpartsa>> =
-    dao.getAllWithImage().map { list ->
-        list.map { konpartsaWithImage ->
-            konpartsaWithImage.toDomain()
+        dao.getAllWithImage().map { list ->
+            list.map { konpartsaWithImage ->
+                konpartsaWithImage.toDomain()
+            }
         }
-    }
 
     override fun getAllKonpartsakInYear(year: String): Flow<List<Konpartsa>> {
         // Urte jakin bateko konpartsak lortu
@@ -38,7 +37,13 @@ class KonpartsaRepositoryImpl(
     }
 
     override suspend fun insertKonpartsaImage(konpartsaId: String, year: String, imageUrl: String) {
-        imageDao.insert(KonpartsaImageEntity(konpartsaId = konpartsaId, year = year, imageUrl = imageUrl))
+        imageDao.insert(
+            KonpartsaImageEntity(
+                konpartsaId = konpartsaId,
+                year = year,
+                imageUrl = imageUrl
+            )
+        )
     }
 
     override suspend fun deleteKonpartsaImage(konpartsaId: String, year: String) {

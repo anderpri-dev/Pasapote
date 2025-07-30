@@ -40,7 +40,7 @@ fun CardArgazkia(
                 onLongClick = { onLongTap() }
             ),
         contentAlignment = Alignment.Center,
-        ) {
+    ) {
         if (imagePath != null) {
             AsyncImage(
                 model = imagePath,

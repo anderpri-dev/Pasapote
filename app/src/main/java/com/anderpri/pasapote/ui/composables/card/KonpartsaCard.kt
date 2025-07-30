@@ -36,7 +36,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.anderpri.pasapote.R
-import com.anderpri.pasapote.domain.model.Konpartsa
 import com.anderpri.pasapote.ui.composables.overlay.DialogFullScreenImageOverlay
 import com.anderpri.pasapote.ui.theme.AppRed
 import com.anderpri.pasapote.ui.viewmodel.KonpartsaViewModel
@@ -85,7 +84,7 @@ fun KonpartsaCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
-        onClick = {  }
+        onClick = { }
     ) {
         Box {
             // Atzeko irudia
