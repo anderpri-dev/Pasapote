@@ -49,4 +49,8 @@ class KonpartsaRepositoryImpl(
     override suspend fun deleteKonpartsaImage(konpartsaId: String, year: String) {
         imageDao.deleteByKonpartsaIdAndYear(konpartsaId, year)
     }
+
+    override suspend fun deleteAllImages() {
+        imageDao.deleteAllImages()
+    }
 }

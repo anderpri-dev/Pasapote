@@ -3,9 +3,11 @@ package com.anderpri.pasapote.ui.viewmodel
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Environment
 import androidx.compose.ui.graphics.layer.GraphicsLayer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.anderpri.pasapote.R
 import com.anderpri.pasapote.common.saveAsShareableFile
 import com.anderpri.pasapote.domain.model.Konpartsa
 import com.anderpri.pasapote.domain.repository.KonpartsaRepository
@@ -55,7 +57,7 @@ class KonpartsaViewModel @Inject constructor(
 
     private fun saveImageToInternalStorage(uri: Uri, id: String, context: Context): String {
         val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
-        val fileName = "imagen_${id}.jpg"
+        val fileName = "${id}.jpg"
         val file = File(context.filesDir, fileName)
         val outputStream: OutputStream = FileOutputStream(file)
         inputStream?.copyTo(outputStream)
@@ -94,8 +96,28 @@ class KonpartsaViewModel @Inject constructor(
                     type = "image/png"
                 }
                 context.startActivity(
-                    Intent.createChooser(shareIntent, "Compartir imagen")
+                    Intent.createChooser(shareIntent, context.getString(R.string.irudia_partekatu))
                 )
+            }
+        }
+    }
+
+    fun deleteImages(context: Context) {
+        viewModelScope.launch {
+            deleteAllProviderFiles(context)
+            repository.deleteAllImages()
+        }
+    }
+
+    fun deleteAllProviderFiles(context: Context) {
+        val dirs = listOf(
+            context.cacheDir,
+            context.filesDir,
+            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        )
+        dirs.forEach { dir ->
+            dir?.listFiles()?.forEach { file ->
+                if (file.isFile) file.delete()
             }
         }
     }

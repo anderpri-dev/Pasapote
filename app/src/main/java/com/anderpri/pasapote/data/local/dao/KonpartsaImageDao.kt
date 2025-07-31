@@ -24,4 +24,7 @@ interface KonpartsaImageDao {
 
     @Query("DELETE FROM konpartsa_image WHERE konpartsaId = :konpartsaId AND year = :year")
     suspend fun deleteByKonpartsaIdAndYear(konpartsaId: String, year: String)
+
+    @Query("DELETE FROM konpartsa_image")
+    suspend fun deleteAllImages()
 }
