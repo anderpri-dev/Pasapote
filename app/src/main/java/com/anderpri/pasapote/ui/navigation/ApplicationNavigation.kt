@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import com.anderpri.pasapote.ui.screens.KonpartsaCarousel
 import com.anderpri.pasapote.ui.screens.KonpartsaListaScreen
 import com.anderpri.pasapote.ui.screens.KonpartsaMapScreen
+import com.anderpri.pasapote.ui.screens.SettingsScreen
 
 @Composable
 fun ApplicationNavigation(navController: NavHostController, paddingValues: PaddingValues) {
@@ -27,6 +28,7 @@ fun ApplicationNavigation(navController: NavHostController, paddingValues: Paddi
         composable("home") { KonpartsaCarousel(paddingValues) }
         composable("map") { KonpartsaMapScreen(paddingValues) }
         composable("list") { KonpartsaListaScreen(paddingValues) }
+        composable("settings") { SettingsScreen(paddingValues) }
     }
 }
 

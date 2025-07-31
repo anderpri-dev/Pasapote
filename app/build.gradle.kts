@@ -75,6 +75,10 @@ android {
             }
         }
     }
+    androidResources {
+        //noinspection MissingResourcesProperties
+        generateLocaleConfig = true
+    }
 }
 
 dependencies {
@@ -113,4 +117,7 @@ dependencies {
 
     // Navigation
     implementation(libs.androidx.navigation.compose)
+
+    // AndroidX AppCompat
+    implementation(libs.androidx.appcompat)
 }

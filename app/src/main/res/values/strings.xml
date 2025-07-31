@@ -16,4 +16,23 @@
     <string name="mapa">Mapa</string>
     <string name="konpartsen_lista">Konpartsen lista</string>
     <string name="pasapotea">Pasapotea</string>
+    <string name="ezarpenak">Ezarpenak</string>
+    <string name="itxura">Itxura</string>
+    <string name="hizkuntza">Hizkuntza</string>
+    <string name="euskara">Euskara</string>
+    <string name="gaztelera">Gaztelera</string>
+    <string name="honi_buruz">Honi buruz</string>
+    <string name="aplikazioari_buruz">Aplikazioari buruz</string>
+    <string name="garatzaileari_buruz">Garatzaileari buruz</string>
+    <string name="alert_ezabatu_guztiak_btn">Argazki guztiak ezabatu</string>
+    <string name="alert_ezabatu_guztiak_title">Argazki guztiak ezabatu?</string>
+    <string name="alert_ezabatu_guztiak_subtitle">Ziur zaude argazki guztiak pasapotetik ezabatu nahi dituzula?</string>
+    <string name="ezabatu_guztiak">Ezabatu guztiak</string>
+    <string name="irudia_partekatu">Irudia partekatu</string>
+    <string name="app_close">Itxi</string>
+    <string name="devinfo.contact">Kontaktua</string>
+    <string name="devinfo.position">Aplikazio mugikorren garatzailea</string>
+    <string name="pasapote_info_1">Pasapote aplikazioaren helburua Aste Nagusiaren Pasapotea digitalki izatea da. Fisikoarekin zigiluak jartzen diren bezala, digitalaren helburua konpartsa guztietan argazki bat ateratzea eta ondoren bilduma betetzea da. Biak batera egin daitezke, noski!\n\nAplikazio hau musutruk egin da, jendeak Aste Nagusiaz modu ezberdin baten disfruta dezan. Bere helburua hori da, eta ez inolako onurarik ateratzeko. Erabilitako irudi eta datu guztien jabea Bilboko Konpartsak da, Aste Nagusirako prestatuta duten aplikaziotik ateratakoak.</string>
+    <string name="pasapote_info_2">Txosnak gure jaien bihotzak dira eta Bilboko Konpartsek eta beste zenbait elkartek haien denbora ematen dute jai herrikoiak aurrera eramateko. Horregatik, babestu behar dugun zerbait da, denonak eta denontzako direlako. Sinatu ezazu ondasun inmaterial izendatzeko ekimena!</string>
+    <string name="sinatu_ekimena">Sinatu ekimena!</string>
 </resources>

@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
+import com.anderpri.pasapote.common.LanguageChangeHelper
 import com.anderpri.pasapote.ui.navigation.ApplicationNavigation
 import com.anderpri.pasapote.ui.screens.AppDrawer
 import com.anderpri.pasapote.ui.theme.PasapoteTheme
@@ -19,6 +20,7 @@ class MainActivity : ComponentActivity() {
         @SuppressLint("SourceLockedOrientationActivity")
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         enableEdgeToEdge()
+        LanguageChangeHelper.setLanguageOnCreate(this)
         setContent {
             PasapoteTheme {
                 val navController = rememberNavController()
