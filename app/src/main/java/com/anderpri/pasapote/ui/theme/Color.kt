@@ -11,12 +11,14 @@ val CardBackground: Color = Color(0xfffaf5e6)
 
 val DarkColorScheme = darkColorScheme(
     primary = AppBlue,
+    onPrimary = Color.White,
     primaryContainer = CardBackground,
     onPrimaryContainer = Color.Black,
 )
 
 val LightColorScheme = lightColorScheme(
     primary = AppBlue,
+    onPrimary = Color.White,
     primaryContainer = CardBackground,
     onPrimaryContainer = Color.Black,
 )
