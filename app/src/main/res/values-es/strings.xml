@@ -36,4 +36,6 @@
     <string name="pasapote_info_1">El objetivo de la aplicación Pasapote es tener el Pasapote de Aste Nagusia en formato digital. Igual que con el físico se ponen sellos, en la versión digital el objetivo es sacarse una foto en cada comparsa y completar la colección. ¡Por supuesto, pueden rellenarse ambos a la vez!\n\nEsta aplicación ha sido creada por amor al arte, para que la gente disfrute de la Aste Nagusia de una manera diferente. Ese es su único fin, no hay ánimo de lucro. Todas las imágenes y datos utilizados pertenecen a Bilboko Konpartsak y han sido extraídos de la aplicación que tienen preparada para Aste Nagusia.</string>
     <string name="pasapote_info_2">Las txosnas son el corazón de nuestras fiestas y las gestionan tanto Bilboko Konpartsak como otros colectivos que dedican su tiempo a sacar adelante nuestras fiestas populares. Por eso, debemos protegerlas, porque son de todas y para todas. ¡Firma la iniciativa para que se declaren bien inmaterial!</string>
     <string name="sinatu_ekimena">¡Firma la iniciativa!</string>
+    <string name="bete_gabekoak_ilundu">Oscurecer no completadas</string>
+    <string name="iluntzea_desaktibatu">Desactivar oscurecer</string>
 </resources>

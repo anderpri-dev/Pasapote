@@ -35,4 +35,6 @@
     <string name="pasapote_info_1">Pasapote aplikazioaren helburua Aste Nagusiaren Pasapotea digitalki izatea da. Fisikoarekin zigiluak jartzen diren bezala, digitalaren helburua konpartsa guztietan argazki bat ateratzea eta ondoren bilduma betetzea da. Biak batera egin daitezke, noski!\n\nAplikazio hau musutruk egin da, jendeak Aste Nagusiaz modu ezberdin baten disfruta dezan. Bere helburua hori da, eta ez inolako onurarik ateratzeko. Erabilitako irudi eta datu guztien jabea Bilboko Konpartsak da, Aste Nagusirako prestatuta duten aplikaziotik ateratakoak.</string>
     <string name="pasapote_info_2">Txosnak gure jaien bihotzak dira eta Bilboko Konpartsek eta beste zenbait elkartek haien denbora ematen dute jai herrikoiak aurrera eramateko. Horregatik, babestu behar dugun zerbait da, denonak eta denontzako direlako. Sinatu ezazu ondasun inmaterial izendatzeko ekimena!</string>
     <string name="sinatu_ekimena">Sinatu ekimena!</string>
+    <string name="bete_gabekoak_ilundu">Bete gabekoak ilundu</string>
+    <string name="iluntzea_desaktibatu">Iluntzea desaktibatu</string>
 </resources>
