@@ -119,7 +119,7 @@ fun AppDrawer(
                     CustomDrawerItem(
                         textResId = R.string.pasapotea,
                         iconResId = R.drawable.album_outline,
-                        currentIconResId = R.drawable.album_outline,
+                        currentIconResId = R.drawable.album_filled,
                         route = "home",
                         currentRoute = currentRoute,
                     ) {
