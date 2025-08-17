@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.aspectRatio
@@ -99,22 +100,37 @@ private fun MapaComposable(
             )
         }
 
-        var isChecked by rememberSaveable { mutableStateOf(false) }
+        var isCheckedBeteGabe by rememberSaveable { mutableStateOf(false) }
+        var isCheckedBeteta by rememberSaveable { mutableStateOf(false) }
 
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            Button(
-                onClick = { isChecked = !isChecked },
-                modifier = Modifier.width(275.dp),
-                colors = androidx.compose.material3.ButtonDefaults.buttonColors(
-                    containerColor = if (isChecked) AppRed else AppGreen,
-                    contentColor = Color.White
-                ),
-            ) {
-                Text(if (isChecked) stringResource(R.string.iluntzea_desaktibatu) else stringResource(R.string.bete_gabekoak_ilundu))
+            Column {
+                Button(
+                    onClick = { isCheckedBeteGabe = !isCheckedBeteGabe
+                        if (isCheckedBeteGabe) isCheckedBeteta = false },
+                    modifier = Modifier.width(275.dp),
+                    colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                        containerColor = if (isCheckedBeteGabe) AppRed else AppGreen,
+                        contentColor = Color.White
+                    ),
+                ) {
+                    Text(if (isCheckedBeteGabe) stringResource(R.string.iluntzea_desaktibatu) else stringResource(R.string.bete_gabekoak_ilundu))
+                }
+                Button(
+                    onClick = { isCheckedBeteta = !isCheckedBeteta
+                        if (isCheckedBeteta) isCheckedBeteGabe = false },
+                    modifier = Modifier.width(275.dp),
+                    colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                        containerColor = if (isCheckedBeteta) AppRed else AppGreen,
+                        contentColor = Color.White
+                    ),
+                ) {
+                    Text(if (isCheckedBeteta) stringResource(R.string.iluntzea_desaktibatu) else stringResource(R.string.betetakoak_ilundu))
+                }
             }
         }
 
@@ -123,9 +139,9 @@ private fun MapaComposable(
             boxWidth = boxWidth,
             boxHeight = boxHeight,
             paddingValues = paddingValues,
-            isChecked = isChecked
+            isCheckedBeteGabe = isCheckedBeteGabe,
+            isCheckedBeteta = isCheckedBeteta
         )
-
     }
 }
 
@@ -135,9 +151,9 @@ private fun MapaPuntuak(
     boxWidth: Float,
     boxHeight: Float,
     paddingValues: PaddingValues,
-    isChecked: Boolean,
+    isCheckedBeteGabe: Boolean,
+    isCheckedBeteta: Boolean,
 ) {
-
 
     val selectedKonpartsaId = rememberSaveable { mutableStateOf<String?>(null) }
 
@@ -149,10 +165,15 @@ private fun MapaPuntuak(
             val density = LocalDensity.current
             val offsetX = with(density) { (konpartsa.posX * boxWidth).toDp() }
             val offsetY = with(density) { (konpartsa.posY * boxHeight).toDp() }
+            var alphaValue = 1f
+            // argazkirik ez -> ilundu
+            if (isCheckedBeteGabe) { alphaValue = if (konpartsa.imagePath != null) 1f else 0.2f }
+            // argazkia badago -> ilundu
+            else if (isCheckedBeteta) {  alphaValue = if (konpartsa.imagePath != null) 0.2f else 1f }
             Box(
                 modifier = Modifier
                     .absoluteOffset(x = offsetX - 20.dp, y = offsetY - 20.dp)
-                    .alpha(if (konpartsa.imagePath != null || !isChecked) 1f else 0.2f)
+                    .alpha(alphaValue)
                     .size(30.dp)
                     .background(Color(konpartsa.color.toColorInt()), shape = RoundedCornerShape(50))
                     .border(1.dp, Color.White, shape = RoundedCornerShape(50))
@@ -178,6 +199,5 @@ private fun MapaPuntuak(
                 }
             }
         }
-
     }
 }

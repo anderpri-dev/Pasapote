@@ -37,6 +37,7 @@
     <string name="pasapote_info_2">Las txosnas son el corazón de nuestras fiestas y las gestionan tanto Bilboko Konpartsak como otros colectivos que dedican su tiempo a sacar adelante nuestras fiestas populares. Por eso, debemos protegerlas, porque son de todas y para todas. ¡Firma la iniciativa para que se declaren bien inmaterial!</string>
     <string name="sinatu_ekimena">¡Firma la iniciativa!</string>
     <string name="bete_gabekoak_ilundu">Oscurecer no completadas</string>
+    <string name="betetakoak_ilundu">Oscurecer completadas</string>
     <string name="iluntzea_desaktibatu">Desactivar oscurecer</string>
     <string name="irudiak_ezabatu_dira">Se han eliminado todas las fotos</string>
     <string name="irudia_ezabatu_da">Se ha eliminado las foto</string>
