@@ -7,20 +7,28 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.anderpri.pasapote.R
 import com.anderpri.pasapote.domain.model.Konpartsa
 import com.anderpri.pasapote.ui.composables.lista.KonpartsaListaCardAnimated
+import com.anderpri.pasapote.ui.viewmodel.DrawerTitleViewModel
 import com.anderpri.pasapote.ui.viewmodel.KonpartsaViewModel
 
 @Composable
 fun KonpartsaListaScreen(
     paddingValues: PaddingValues,
+    drawerTitleViewModel: DrawerTitleViewModel = hiltViewModel(),
     viewModel: KonpartsaViewModel = hiltViewModel()
 ) {
     val konpartsak = viewModel.konpartsak.collectAsState().value
+
+    LaunchedEffect(Unit) {
+        drawerTitleViewModel.updateTitle(R.string.konpartsen_lista)
+    }
 
     Box(
         modifier = Modifier

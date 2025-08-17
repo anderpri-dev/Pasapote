@@ -23,6 +23,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,6 +40,7 @@ import com.anderpri.pasapote.ui.activities.ScreenCoverLanguageChangeActivity
 import com.anderpri.pasapote.ui.composables.settings.AppInfoDialog
 import com.anderpri.pasapote.ui.composables.settings.DeveloperInfoDialog
 import com.anderpri.pasapote.ui.theme.AppRed
+import com.anderpri.pasapote.ui.viewmodel.DrawerTitleViewModel
 import com.anderpri.pasapote.ui.viewmodel.KonpartsaViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -46,10 +48,15 @@ import kotlinx.coroutines.launch
 @Composable
 fun SettingsScreen(
     paddingValues: PaddingValues,
+    drawerTitleViewModel: DrawerTitleViewModel = hiltViewModel(),
     viewModel: KonpartsaViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        drawerTitleViewModel.updateTitle(R.string.ezarpenak)
+    }
 
     var selectedLanguage by remember { mutableStateOf(LanguageChangeHelper.getLanguage(context)) }
     val onCurrentLanguageChange: (String) -> Unit = { newLanguage ->

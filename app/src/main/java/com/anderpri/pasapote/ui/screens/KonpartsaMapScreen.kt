@@ -43,14 +43,20 @@ import com.anderpri.pasapote.domain.model.Konpartsa
 import com.anderpri.pasapote.ui.composables.card.KonpartsaCard
 import com.anderpri.pasapote.ui.theme.AppGreen
 import com.anderpri.pasapote.ui.theme.AppRed
+import com.anderpri.pasapote.ui.viewmodel.DrawerTitleViewModel
 import com.anderpri.pasapote.ui.viewmodel.KonpartsaViewModel
 
 @Composable
 fun KonpartsaMapScreen(
     paddingValues: PaddingValues,
+    drawerTitleViewModel: DrawerTitleViewModel = hiltViewModel(),
     viewModel: KonpartsaViewModel = hiltViewModel()
 ) {
     val konpartsak = viewModel.konpartsak.collectAsState().value
+
+    LaunchedEffect(Unit) {
+        drawerTitleViewModel.updateTitle(R.string.mapa)
+    }
 
     var isLoading by remember { mutableStateOf(true) }
     if (isLoading) {

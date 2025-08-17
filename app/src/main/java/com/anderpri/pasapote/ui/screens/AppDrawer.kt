@@ -30,10 +30,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,12 +38,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.transformations
 import coil3.transform.RoundedCornersTransformation
 import com.anderpri.pasapote.R
+import com.anderpri.pasapote.ui.state.DrawerTitleState
+import com.anderpri.pasapote.ui.viewmodel.DrawerTitleViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -54,6 +54,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun AppDrawer(
     navController: NavHostController,
+    drawerTitleState: DrawerTitleState = hiltViewModel<DrawerTitleViewModel>().drawerTitleState,
     content: @Composable (PaddingValues) -> Unit
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -63,7 +64,7 @@ fun AppDrawer(
         scope.launch { drawerState.close() }
     }
 
-    var titleResId by rememberSaveable { mutableIntStateOf(R.string.app_name) }
+    val titleResId by drawerTitleState.title
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -126,7 +127,6 @@ fun AppDrawer(
                         onClickItem(
                             navController = navController,
                             route = "home",
-                            setTitle = { titleResId = R.string.pasapotea },
                             closeDrawer = { scope.launch { if (drawerState.isOpen) drawerState.close() } }
                         )
                     }
@@ -146,7 +146,6 @@ fun AppDrawer(
                         onClickItem(
                             navController = navController,
                             route = "map",
-                            setTitle = { titleResId = R.string.mapa },
                             closeDrawer = { scope.launch { if (drawerState.isOpen) drawerState.close() } }
                         )
                     }
@@ -162,7 +161,6 @@ fun AppDrawer(
                         onClickItem(
                             navController = navController,
                             route = "list",
-                            setTitle = { titleResId = R.string.konpartsen_lista },
                             closeDrawer = { scope.launch { if (drawerState.isOpen) drawerState.close() } }
                         )
                     }
@@ -182,7 +180,6 @@ fun AppDrawer(
                         onClickItem(
                             navController = navController,
                             route = "settings",
-                            setTitle = { titleResId = R.string.ezarpenak },
                             closeDrawer = { scope.launch { if (drawerState.isOpen) drawerState.close() }}
                         )
                     }
@@ -256,12 +253,11 @@ fun CustomDrawerItem(
     )
 }
 
-fun onClickItem(navController: NavHostController, route: String, setTitle: () -> Unit, closeDrawer: () -> Job) {
+fun onClickItem(navController: NavHostController, route: String, closeDrawer: () -> Job) {
     navController.navigate(route) {
         popUpTo("home") { inclusive = route == "home" }
         launchSingleTop = true
         restoreState = true
     }
-    setTitle()
     closeDrawer()
 }
