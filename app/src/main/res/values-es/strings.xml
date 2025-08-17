@@ -38,4 +38,6 @@
     <string name="sinatu_ekimena">¡Firma la iniciativa!</string>
     <string name="bete_gabekoak_ilundu">Oscurecer no completadas</string>
     <string name="iluntzea_desaktibatu">Desactivar oscurecer</string>
+    <string name="irudiak_ezabatu_dira">Se han eliminado todas las fotos</string>
+    <string name="irudia_ezabatu_da">Se ha eliminado las foto</string>
 </resources>

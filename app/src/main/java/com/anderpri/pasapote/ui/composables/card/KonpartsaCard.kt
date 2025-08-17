@@ -1,6 +1,7 @@
 package com.anderpri.pasapote.ui.composables.card
 
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -160,6 +161,11 @@ fun KonpartsaCard(
                         viewModel.deleteImage(konpartsa)
                         showDeleteDialog = false
                         showFullScreen = false
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.irudia_ezabatu_da),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = AppRed)
                 ) {

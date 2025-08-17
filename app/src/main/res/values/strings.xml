@@ -37,4 +37,6 @@
     <string name="sinatu_ekimena">Sinatu ekimena!</string>
     <string name="bete_gabekoak_ilundu">Bete gabekoak ilundu</string>
     <string name="iluntzea_desaktibatu">Iluntzea desaktibatu</string>
+    <string name="irudiak_ezabatu_dira">Argazki guztiak ezabatu dira</string>
+    <string name="irudia_ezabatu_da">Argazkia ezabatu da</string>
 </resources>
