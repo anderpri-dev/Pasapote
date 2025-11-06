@@ -11,7 +11,6 @@ import com.anderpri.pasapote.R
 import com.anderpri.pasapote.common.saveAsShareableFile
 import com.anderpri.pasapote.domain.model.Konpartsa
 import com.anderpri.pasapote.domain.repository.KonpartsaRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -22,10 +21,8 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
-import javax.inject.Inject
 
-@HiltViewModel
-class KonpartsaViewModel @Inject constructor(
+class KonpartsaViewModel(
     private val repository: KonpartsaRepository
 ) : ViewModel() {
     val konpartsak: StateFlow<List<Konpartsa>> =

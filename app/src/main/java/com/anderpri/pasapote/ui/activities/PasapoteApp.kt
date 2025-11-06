@@ -1,7 +1,20 @@
 package com.anderpri.pasapote.ui.activities
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.anderpri.pasapote.di.appModule
+import com.anderpri.pasapote.di.databaseModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 
-@HiltAndroidApp
-class PasapoteApp : Application()
+class PasapoteApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            androidLogger(Level.ERROR)
+            androidContext(this@PasapoteApp)
+            modules(databaseModule, appModule)
+        }
+    }
+}

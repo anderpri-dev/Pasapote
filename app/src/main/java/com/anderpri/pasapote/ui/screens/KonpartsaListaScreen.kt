@@ -11,18 +11,18 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.anderpri.pasapote.R
 import com.anderpri.pasapote.domain.model.Konpartsa
 import com.anderpri.pasapote.ui.composables.lista.KonpartsaListaCardAnimated
 import com.anderpri.pasapote.ui.viewmodel.DrawerTitleViewModel
 import com.anderpri.pasapote.ui.viewmodel.KonpartsaViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun KonpartsaListaScreen(
     paddingValues: PaddingValues,
-    drawerTitleViewModel: DrawerTitleViewModel = hiltViewModel(),
-    viewModel: KonpartsaViewModel = hiltViewModel()
+    drawerTitleViewModel: DrawerTitleViewModel = koinViewModel(),
+    viewModel: KonpartsaViewModel = koinViewModel()
 ) {
     val konpartsak = viewModel.konpartsak.collectAsState().value
 

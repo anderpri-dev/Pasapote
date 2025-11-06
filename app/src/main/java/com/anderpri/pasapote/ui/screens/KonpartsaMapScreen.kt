@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.core.graphics.toColorInt
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil3.compose.AsyncImage
 import com.anderpri.pasapote.R
 import com.anderpri.pasapote.domain.model.Konpartsa
@@ -46,12 +45,13 @@ import com.anderpri.pasapote.ui.theme.AppGreen
 import com.anderpri.pasapote.ui.theme.AppRed
 import com.anderpri.pasapote.ui.viewmodel.DrawerTitleViewModel
 import com.anderpri.pasapote.ui.viewmodel.KonpartsaViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun KonpartsaMapScreen(
     paddingValues: PaddingValues,
-    drawerTitleViewModel: DrawerTitleViewModel = hiltViewModel(),
-    viewModel: KonpartsaViewModel = hiltViewModel()
+    drawerTitleViewModel: DrawerTitleViewModel = koinViewModel(),
+    viewModel: KonpartsaViewModel = koinViewModel()
 ) {
     val konpartsak = viewModel.konpartsak.collectAsState().value
 

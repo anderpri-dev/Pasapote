@@ -1,24 +1,21 @@
 package com.anderpri.pasapote.di
 
-import com.anderpri.pasapote.data.local.dao.KonpartsaDao
-import com.anderpri.pasapote.data.local.dao.KonpartsaImageDao
 import com.anderpri.pasapote.data.repository.KonpartsaRepositoryImpl
 import com.anderpri.pasapote.domain.repository.KonpartsaRepository
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import com.anderpri.pasapote.ui.state.DrawerTitleState
+import com.anderpri.pasapote.ui.viewmodel.DrawerTitleViewModel
+import com.anderpri.pasapote.ui.viewmodel.KonpartsaViewModel
+import org.koin.core.module.dsl.viewModel
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-object AppModule {
+val appModule = module {
+    single<KonpartsaRepository> {
+        KonpartsaRepositoryImpl(get(), get())
+    }
 
-    @Provides
-    @Singleton
-    fun provideKonpartsaRepository(
-        dao: KonpartsaDao,
-        imageDao: KonpartsaImageDao
-    ): KonpartsaRepository =
-        KonpartsaRepositoryImpl(dao, imageDao)
+    single { DrawerTitleState() }
+
+    viewModel { KonpartsaViewModel(get()) }
+
+    viewModel { DrawerTitleViewModel(get()) }
 }

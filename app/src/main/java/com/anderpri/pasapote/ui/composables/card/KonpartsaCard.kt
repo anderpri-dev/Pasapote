@@ -35,17 +35,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.anderpri.pasapote.R
 import com.anderpri.pasapote.ui.composables.overlay.DialogFullScreenImageOverlay
 import com.anderpri.pasapote.ui.theme.AppRed
 import com.anderpri.pasapote.ui.viewmodel.KonpartsaViewModel
+import org.koin.androidx.compose.koinViewModel
 import java.io.File
 
 @Composable
 fun KonpartsaCard(
     konpartsaId: String,
-    viewModel: KonpartsaViewModel = hiltViewModel(),
+    viewModel: KonpartsaViewModel = koinViewModel(),
 ) {
     val konpartsak = viewModel.konpartsak.collectAsState()
     val konpartsa = konpartsak.value.find { it.id == konpartsaId }

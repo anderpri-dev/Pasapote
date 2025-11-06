@@ -27,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.anderpri.pasapote.R
 import com.anderpri.pasapote.domain.model.Konpartsa
 import com.anderpri.pasapote.ui.composables.card.KonpartsaCard
@@ -35,13 +34,14 @@ import com.anderpri.pasapote.ui.theme.AppGreen
 import com.anderpri.pasapote.ui.viewmodel.DrawerTitleViewModel
 import com.anderpri.pasapote.ui.viewmodel.KonpartsaViewModel
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
 fun KonpartsaCarousel(
     paddingValues: PaddingValues,
-    drawerTitleViewModel: DrawerTitleViewModel = hiltViewModel(),
-    viewModel: KonpartsaViewModel = hiltViewModel()
+    drawerTitleViewModel: DrawerTitleViewModel = koinViewModel(),
+    viewModel: KonpartsaViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
     LaunchedEffect(Unit) {
