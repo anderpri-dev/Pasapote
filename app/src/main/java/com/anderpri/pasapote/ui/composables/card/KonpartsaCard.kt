@@ -41,7 +41,7 @@ import com.anderpri.pasapote.ui.composables.overlay.DialogFullScreenImageOverlay
 import com.anderpri.pasapote.ui.theme.AppRed
 import com.anderpri.pasapote.ui.viewmodel.KonpartsaViewModel
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import java.io.File
 
 @Composable

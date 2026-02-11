@@ -34,7 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.anderpri.pasapote.R
 import com.anderpri.pasapote.common.LanguageChangeHelper
 import com.anderpri.pasapote.ui.activities.ScreenCoverLanguageChangeActivity

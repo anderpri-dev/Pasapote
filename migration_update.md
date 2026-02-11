@@ -247,8 +247,75 @@ common/ShareUtils.kt                   — solo GraphicsLayer → ByteArray
 - `GraphicsLayer.toImageBytes()` usa `asAndroidBitmap()` (ShareUtils.kt)
 
 ---
-## FASE 5: Navigation Compose Multiplatform — PENDIENTE
-## FASE 6: ViewModel KMP — PENDIENTE
+## FASE 5: Navigation Compose Multiplatform — COMPLETADA (diferida a Fase 9)
+
+**Fecha:** 2026-02-11
+
+### Análisis
+
+La librería KMP de navegación de JetBrains (`org.jetbrains.androidx.navigation:navigation-compose:2.9.2`) **requiere el plugin Compose Multiplatform** (`org.jetbrains.compose`) que se añadirá en la Fase 9. Añadirlo ahora sin el resto de Compose Multiplatform podría causar conflictos.
+
+### Por qué no se necesitan cambios ahora
+
+1. **APIs idénticas:** La versión KMP usa los mismos packages (`androidx.navigation.*`) que la versión AndroidX actual. Mismo `NavHost`, `NavHostController`, `composable()`, `rememberNavController()`.
+2. **Código ya compatible:** Los 3 ficheros de navegación (`ApplicationNavigation.kt`, `AppDrawer.kt`, `MainActivity.kt`) solo usan imports `androidx.navigation.*` — sin nada Android-specific.
+3. **En Fase 9** solo se cambiará el artifact en `libs.versions.toml`: `androidx.navigation:navigation-compose` → `org.jetbrains.androidx.navigation:navigation-compose`. Cero cambios de código.
+
+### Punto pendiente para Fase 9
+- `BackHandler` en `AppDrawer.kt` usa `androidx.activity.compose.BackHandler` (Android-specific). Para KMP necesitará alternativa multiplataforma.
+
+---
+## FASE 6: ViewModel → AndroidX Lifecycle KMP — COMPLETADA
+
+**Fecha:** 2026-02-11
+
+### Qué se ha hecho
+
+1. **Dependencia `lifecycle-viewmodel` KMP añadida:**
+   - `libs.versions.toml`: Añadida library `androidx-lifecycle-viewmodel` (v2.9.2, misma version ref que `lifecycleRuntimeKtx`)
+   - `app/build.gradle.kts`: Añadida `implementation(libs.androidx.lifecycle.viewmodel)`
+   - Este artifact es el KMP-compatible (`androidx.lifecycle:lifecycle-viewmodel`) que en Fase 8 irá en `commonMain`
+   - Se mantiene `lifecycle-runtime-ktx` para APIs Android-specific de lifecycle (Activities)
+
+2. **Koin migrado a ViewModel multiplataforma:**
+   - `libs.versions.toml`: `koin-androidx-compose` (Android-only) → `koin-compose-viewmodel` (KMP)
+   - `app/build.gradle.kts`: misma sustitución
+   - `koin-compose-viewmodel` trae transitivamente `koin-compose` (para `koinInject()`)
+
+3. **Imports actualizados en 6 composables:**
+   - `org.koin.androidx.compose.koinViewModel` → `org.koin.compose.viewmodel.koinViewModel`
+   - Ficheros: `AppDrawer.kt`, `KonpartsaCarousel.kt`, `KonpartsaMapScreen.kt`, `KonpartsaCard.kt`, `SettingsScreen.kt`, `KonpartsaListaScreen.kt`
+
+4. **ViewModels ya KMP-ready (sin cambios necesarios):**
+   - `KonpartsaViewModel`: Solo usa `androidx.lifecycle.ViewModel`, `viewModelScope`, `StateFlow`, `kotlinx.coroutines` — todo KMP-compatible
+   - `DrawerTitleViewModel`: Solo usa `androidx.lifecycle.ViewModel` — KMP-compatible
+   - Cero imports Android en ambos ViewModels (ya limpiados en Fase 4)
+
+5. **`AppModule.kt` sin cambios necesarios:**
+   - `viewModelOf()` de `org.koin.core.module.dsl` funciona igual con el nuevo artifact KMP
+
+6. **Build verificado:** `compileDebugKotlin` BUILD SUCCESSFUL. 0 referencias a `koin.androidx.compose`.
+
+### Ficheros modificados
+```
+gradle/libs.versions.toml              — lifecycle-viewmodel añadida, koin-androidx-compose → koin-compose-viewmodel
+app/build.gradle.kts                    — lifecycle-viewmodel añadida, koin dep actualizada
+ui/screens/AppDrawer.kt                — import koinViewModel KMP
+ui/screens/KonpartsaCarousel.kt        — import koinViewModel KMP
+ui/screens/KonpartsaMapScreen.kt       — import koinViewModel KMP
+ui/screens/KonpartsaListaScreen.kt     — import koinViewModel KMP
+ui/screens/SettingsScreen.kt           — import koinViewModel KMP
+ui/composables/card/KonpartsaCard.kt   — import koinViewModel KMP
+```
+
+### Resumen de estado KMP de los ViewModels
+
+| ViewModel | Imports Android | APIs Android | KMP-ready |
+|---|---|---|---|
+| `KonpartsaViewModel` | 0 | 0 (todo via interfaces) | ✅ |
+| `DrawerTitleViewModel` | 0 | 0 | ✅ |
+
+---
 ## FASE 7: Verificación final Android — PENDIENTE
 ## FASE 8: Reestructurar como proyecto KMP — PENDIENTE
 ## FASE 9: Compose Multiplatform (UI compartida) — PENDIENTE

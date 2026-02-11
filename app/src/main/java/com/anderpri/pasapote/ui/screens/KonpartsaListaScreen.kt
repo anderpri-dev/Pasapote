@@ -11,7 +11,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.anderpri.pasapote.R
 import com.anderpri.pasapote.domain.model.Konpartsa
 import com.anderpri.pasapote.ui.composables.lista.KonpartsaListaCardAnimated
