@@ -1,6 +1,5 @@
 package com.anderpri.pasapote.ui.composables.settings
 
-import android.content.Intent
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,17 +25,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.transformations
 import coil3.transform.RoundedCornersTransformation
 import com.anderpri.pasapote.R
+import com.anderpri.pasapote.platform.ShareService
+import org.koin.compose.koinInject
 
 
 @Composable
 fun AppInfoDialog(onDismiss: () -> Unit) {
-    val context = LocalContext.current
+    val shareService: ShareService = koinInject()
     AlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
@@ -94,10 +94,7 @@ fun AppInfoDialog(onDismiss: () -> Unit) {
                     )
                     Button(
                         modifier = Modifier.width(220.dp),
-                        onClick = {
-                            val intent = Intent(Intent.ACTION_VIEW, "https://app.bilbokokonpartsak.eus".toUri())
-                            context.startActivity(intent)
-                        }
+                        onClick = { shareService.openUrl("https://app.bilbokokonpartsak.eus") }
                     ) {
                         Text("APP Aste Nagusia")
                     }
@@ -108,10 +105,7 @@ fun AppInfoDialog(onDismiss: () -> Unit) {
                     )
                     Button(
                         modifier = Modifier.width(220.dp),
-                        onClick = {
-                            val intent = Intent(Intent.ACTION_VIEW, "https://www.txosnak.eus".toUri())
-                            context.startActivity(intent)
-                        }
+                        onClick = { shareService.openUrl("https://www.txosnak.eus") }
                     ) {
                         Text(stringResource(R.string.sinatu_ekimena))
                     }

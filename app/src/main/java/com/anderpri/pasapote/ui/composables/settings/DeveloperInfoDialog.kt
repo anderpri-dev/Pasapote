@@ -1,6 +1,5 @@
 package com.anderpri.pasapote.ui.composables.settings
 
-import android.content.Intent
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,15 +25,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.transformations
 import coil3.transform.RoundedCornersTransformation
 import com.anderpri.pasapote.R
+import com.anderpri.pasapote.platform.ShareService
+import org.koin.compose.koinInject
 
 @Composable
 fun DeveloperInfoDialog(onDismiss: () -> Unit) {
+    val shareService: ShareService = koinInject()
     AlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
@@ -87,40 +88,23 @@ fun DeveloperInfoDialog(onDismiss: () -> Unit) {
                         .fillMaxWidth()
                         .padding(top = 8.dp, bottom = 8.dp)
                 ) {
-                    val context = LocalContext.current
-
                     Button(
                         modifier = Modifier.width(200.dp),
-                        onClick = {
-                        val intent = Intent(Intent.ACTION_VIEW,
-                            "https://www.linkedin.com/in/ander-prieto/".toUri())
-                        context.startActivity(intent)
-                    }) {
-                        Text(
-                            "LinkedIn",
-                        )
+                        onClick = { shareService.openUrl("https://www.linkedin.com/in/ander-prieto/") }
+                    ) {
+                        Text("LinkedIn")
                     }
                     Button(
                         modifier = Modifier.width(200.dp),
-                        onClick = {
-                        val intent = Intent(Intent.ACTION_VIEW,
-                            "https://github.com/anderpri-dev/".toUri())
-                        context.startActivity(intent)
-                    }) {
-                        Text(
-                            "GitHub",
-                        )
+                        onClick = { shareService.openUrl("https://github.com/anderpri-dev/") }
+                    ) {
+                        Text("GitHub")
                     }
                     Button(
                         modifier = Modifier.width(200.dp),
-                        onClick = {
-                        val intent = Intent(Intent.ACTION_SENDTO,
-                            "mailto:anderpri.dev@gmail.com".toUri())
-                        context.startActivity(intent)
-                    }) {
-                        Text(
-                            stringResource(R.string.devinfo_contact),
-                        )
+                        onClick = { shareService.sendEmail("anderpri.dev@gmail.com") }
+                    ) {
+                        Text(stringResource(R.string.devinfo_contact))
                     }
                 }
             }

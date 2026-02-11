@@ -35,17 +35,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.anderpri.pasapote.R
+import com.anderpri.pasapote.common.toImageBytes
 import com.anderpri.pasapote.ui.composables.overlay.DialogFullScreenImageOverlay
 import com.anderpri.pasapote.ui.theme.AppRed
 import com.anderpri.pasapote.ui.viewmodel.KonpartsaViewModel
+import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 import java.io.File
 
 @Composable
 fun KonpartsaCard(
     konpartsaId: String,
-    viewModel: KonpartsaViewModel = hiltViewModel(),
+    viewModel: KonpartsaViewModel = koinViewModel(),
 ) {
     val konpartsak = viewModel.konpartsak.collectAsState()
     val konpartsa = konpartsak.value.find { it.id == konpartsaId }
@@ -59,8 +61,8 @@ fun KonpartsaCard(
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) {
-        it?.let {
-            viewModel.onImageSelected(konpartsa, it, context)
+        it?.let { uri ->
+            viewModel.onImageSelected(konpartsa, uri.toString())
         }
     }
 
@@ -71,7 +73,7 @@ fun KonpartsaCard(
         contract = ActivityResultContracts.TakePicture()
     ) { success ->
         if (success) {
-            cameraImageUri?.let { viewModel.onImageSelected(konpartsa, it, context) }
+            cameraImageUri?.let { viewModel.onImageSelected(konpartsa, it.toString()) }
         }
     }
 
@@ -138,11 +140,17 @@ fun KonpartsaCard(
 
     if (showFullScreen && imagePath != null) {
         val coroutineScope = rememberCoroutineScope()
+        val shareTitle = stringResource(R.string.irudia_partekatu)
         DialogFullScreenImageOverlay(
             konpartsa = konpartsa,
             onDismiss = { showFullScreen = false },
             onShareToInstagram = { graphicsLayer ->
-                viewModel.shareToInstagram(graphicsLayer, context, coroutineScope)
+                coroutineScope.launch {
+                    if (graphicsLayer.size.width > 0 && graphicsLayer.size.height > 0) {
+                        val bytes = graphicsLayer.toImageBytes()
+                        viewModel.shareImage(bytes, shareTitle)
+                    }
+                }
             },
             onDelete = {
                 showDeleteDialog = true

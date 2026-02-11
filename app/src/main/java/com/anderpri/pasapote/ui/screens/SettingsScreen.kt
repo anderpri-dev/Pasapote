@@ -34,7 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import org.koin.androidx.compose.koinViewModel
 import com.anderpri.pasapote.R
 import com.anderpri.pasapote.common.LanguageChangeHelper
 import com.anderpri.pasapote.ui.activities.ScreenCoverLanguageChangeActivity
@@ -49,8 +49,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun SettingsScreen(
     paddingValues: PaddingValues,
-    drawerTitleViewModel: DrawerTitleViewModel = hiltViewModel(),
-    viewModel: KonpartsaViewModel = hiltViewModel()
+    drawerTitleViewModel: DrawerTitleViewModel = koinViewModel(),
+    viewModel: KonpartsaViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -175,7 +175,7 @@ fun SettingsScreen(
             confirmButton = {
                 Button(
                     onClick = {
-                        viewModel.deleteImages(context)
+                        viewModel.deleteImages()
                         showDeleteArgazkiak = false
                         Toast.makeText(
                             context,

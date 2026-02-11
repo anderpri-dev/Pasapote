@@ -38,7 +38,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
@@ -54,7 +54,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun AppDrawer(
     navController: NavHostController,
-    drawerTitleState: DrawerTitleState = hiltViewModel<DrawerTitleViewModel>().drawerTitleState,
+    drawerTitleState: DrawerTitleState = koinViewModel<DrawerTitleViewModel>().drawerTitleState,
     content: @Composable (PaddingValues) -> Unit
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)

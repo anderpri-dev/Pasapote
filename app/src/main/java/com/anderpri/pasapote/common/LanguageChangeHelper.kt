@@ -5,36 +5,38 @@ import android.content.Context
 import android.os.Build
 import android.os.LocaleList
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.edit
 import androidx.core.os.LocaleListCompat
+import com.russhwolf.settings.Settings
+import com.russhwolf.settings.SharedPreferencesSettings
 
 object LanguageChangeHelper {
+
+    private fun getSettings(context: Context): Settings =
+        SharedPreferencesSettings(
+            context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        )
 
     fun changeLanguage(context: Context, languageCode: String) {
         saveLanguage(context, languageCode)
 
-        //version >= 13
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             context.getSystemService(LocaleManager::class.java).applicationLocales =
                 LocaleList.forLanguageTags(languageCode)
         } else {
-            //version < 13
             AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(languageCode))
         }
     }
+
     fun saveLanguage(context: Context, language: String) {
-        val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        prefs.edit { putString("language", language) }
+        getSettings(context).putString("language", language)
     }
 
     fun getLanguage(context: Context): String {
-        val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        return prefs.getString("language", "eu") ?: "eu"
+        return getSettings(context).getString("language", "eu")
     }
 
     fun setLanguageOnCreate(context: Context) {
-        val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        val language = prefs.getString("language", "eu") ?: "eu"
+        val language = getSettings(context).getString("language", "eu")
         changeLanguage(context, language)
     }
 }

@@ -1,52 +1,42 @@
 package com.anderpri.pasapote.ui.viewmodel
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.os.Environment
-import androidx.compose.ui.graphics.layer.GraphicsLayer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anderpri.pasapote.R
-import com.anderpri.pasapote.common.saveAsShareableFile
 import com.anderpri.pasapote.domain.model.Konpartsa
 import com.anderpri.pasapote.domain.repository.KonpartsaRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
+import com.anderpri.pasapote.platform.AssetLoader
+import com.anderpri.pasapote.platform.ImageStorage
+import com.anderpri.pasapote.platform.ShareService
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.io.OutputStream
-import javax.inject.Inject
 
-@HiltViewModel
-class KonpartsaViewModel @Inject constructor(
-    private val repository: KonpartsaRepository
+class KonpartsaViewModel(
+    private val repository: KonpartsaRepository,
+    private val assetLoader: AssetLoader,
+    private val imageStorage: ImageStorage,
+    private val shareService: ShareService
 ) : ViewModel() {
     val konpartsak: StateFlow<List<Konpartsa>> =
         repository.getAllKonpartsak()
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    fun initKonpartsak(context: Context) {
+    fun initKonpartsak() {
         val current = konpartsak.value
         if (current.isEmpty()) {
             viewModelScope.launch {
-                val json = context.assets.open("konpartsak.json")
-                    .bufferedReader().use { it.readText() }
+                val json = assetLoader.loadJsonFromAssets("konpartsak.json")
                 val konpartsak = Json.decodeFromString<List<Konpartsa>>(json)
                 repository.insertAll(konpartsak)
             }
         }
     }
 
-    fun onImageSelected(konpartsa: Konpartsa, uri: Uri, context: Context) {
+    fun onImageSelected(konpartsa: Konpartsa, platformUri: String) {
         viewModelScope.launch {
-            val path = saveImageToInternalStorage(uri, konpartsa.id, context)
+            val path = imageStorage.copyImageToStorage(platformUri, konpartsa.id)
             repository.insertKonpartsaImage(
                 konpartsaId = konpartsa.id,
                 year = konpartsa.year,
@@ -55,21 +45,10 @@ class KonpartsaViewModel @Inject constructor(
         }
     }
 
-    private fun saveImageToInternalStorage(uri: Uri, id: String, context: Context): String {
-        val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
-        val fileName = "${id}.jpg"
-        val file = File(context.filesDir, fileName)
-        val outputStream: OutputStream = FileOutputStream(file)
-        inputStream?.copyTo(outputStream)
-        inputStream?.close()
-        outputStream.close()
-        return file.absolutePath
-    }
-
     fun deleteImage(konpartsa: Konpartsa) {
         viewModelScope.launch {
             val path = konpartsa.imagePath ?: return@launch
-            deleteImageFromInternalStorage(path)
+            imageStorage.deleteImage(path)
             repository.deleteKonpartsaImage(
                 konpartsaId = konpartsa.id,
                 year = konpartsa.year,
@@ -77,48 +56,14 @@ class KonpartsaViewModel @Inject constructor(
         }
     }
 
-    private fun deleteImageFromInternalStorage(imagePath: String): Boolean {
-        val file = File(imagePath)
-        return file.exists() && file.delete()
+    fun shareImage(imageBytes: ByteArray, title: String) {
+        shareService.shareImage(imageBytes, title)
     }
 
-    fun shareToInstagram(
-        graphicsLayer: GraphicsLayer,
-        context: Context,
-        coroutineScope: CoroutineScope
-    ) {
-        coroutineScope.launch {
-            if (graphicsLayer.size.width > 0 && graphicsLayer.size.height > 0) {
-                val uri = graphicsLayer.saveAsShareableFile(context)
-                val shareIntent: Intent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_STREAM, uri)
-                    type = "image/png"
-                }
-                context.startActivity(
-                    Intent.createChooser(shareIntent, context.getString(R.string.irudia_partekatu))
-                )
-            }
-        }
-    }
-
-    fun deleteImages(context: Context) {
+    fun deleteImages() {
         viewModelScope.launch {
-            deleteAllProviderFiles(context)
+            imageStorage.deleteAllFiles()
             repository.deleteAllImages()
-        }
-    }
-
-    fun deleteAllProviderFiles(context: Context) {
-        val dirs = listOf(
-            context.cacheDir,
-            context.filesDir,
-            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        )
-        dirs.forEach { dir ->
-            dir?.listFiles()?.forEach { file ->
-                if (file.isFile) file.delete()
-            }
         }
     }
 }

@@ -11,9 +11,7 @@ import com.anderpri.pasapote.common.LanguageChangeHelper
 import com.anderpri.pasapote.ui.navigation.ApplicationNavigation
 import com.anderpri.pasapote.ui.screens.AppDrawer
 import com.anderpri.pasapote.ui.theme.PasapoteTheme
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
