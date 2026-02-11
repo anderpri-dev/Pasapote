@@ -1,5 +1,6 @@
 package com.anderpri.pasapote.data.local
 
+import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -10,6 +11,7 @@ import com.anderpri.pasapote.data.local.entity.KonpartsaImageEntity
 
 @Database(entities = [KonpartsaEntity::class, KonpartsaImageEntity::class], version = 2)
 @TypeConverters(Converters::class)
+@ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun konpartsaDao(): KonpartsaDao
     abstract fun konpartsaImageDao(): KonpartsaImageDao

@@ -316,7 +316,207 @@ ui/composables/card/KonpartsaCard.kt   — import koinViewModel KMP
 | `DrawerTitleViewModel` | 0 | 0 | ✅ |
 
 ---
-## FASE 7: Verificación final Android — PENDIENTE
-## FASE 8: Reestructurar como proyecto KMP — PENDIENTE
+## FASE 7: Verificación final Android — COMPLETADA
+
+**Fecha:** 2026-02-11
+
+### Verificación técnica
+
+1. **Build completo:** `assembleDebug` BUILD SUCCESSFUL — APK generado correctamente
+2. **Warnings:** Solo 1 warning no relacionado (`overridePendingTransition` deprecated en `SettingsScreen.kt:66`)
+3. **0 errores de compilación** tras todas las migraciones (Fases 0-6)
+
+### Auditoría KMP: Clasificación de los 49 ficheros
+
+#### CAPA COMPARTIBLE (commonMain en Fase 8) — 22 ficheros KMP-ready
+
+| Capa | Ficheros | Estado |
+|---|---|---|
+| **Domain** | `Konpartsa.kt`, `KonpartsaRepository.kt` | ✅ 0 imports Android |
+| **Platform interfaces** | `AssetLoader.kt`, `ImageStorage.kt`, `ShareService.kt`, `LocaleManager.kt`, `UserFeedback.kt` | ✅ 0 imports Android |
+| **ViewModels** | `KonpartsaViewModel.kt`, `DrawerTitleViewModel.kt` | ✅ `lifecycle-viewmodel` es KMP (2.8+) |
+| **State** | `DrawerTitleState.kt` | ✅ `mutableIntStateOf` es KMP via Compose Multiplatform |
+| **Data/Room** | `AppDatabase.kt`, `Converters.kt`, `Migrations.kt`, `KonpartsaDao.kt`, `KonpartsaImageDao.kt`, `KonpartsaEntity.kt`, `KonpartsaImageEntity.kt`, `KonpartsaWithImage.kt`, `Mappers.kt` | ✅ Room 2.7+ es KMP. `SQLiteConnection`+`BundledSQLiteDriver` son KMP |
+| **Repository** | `KonpartsaRepositoryImpl.kt` | ⚠️ Usa `java.util.Calendar` (línea 19) — necesita `kotlinx-datetime` |
+
+#### CAPA ANDROID (androidMain en Fase 8) — 6 ficheros
+
+| Fichero | Motivo |
+|---|---|
+| `platform/android/AndroidAssetLoader.kt` | Implementación Android de `AssetLoader` |
+| `platform/android/AndroidImageStorage.kt` | Implementación Android de `ImageStorage` |
+| `platform/android/AndroidShareService.kt` | Implementación Android de `ShareService` |
+| `ui/activities/MainActivity.kt` | Entry point Android |
+| `ui/activities/PasapoteApp.kt` | Application + Koin init |
+| `ui/activities/ScreenCoverLanguageChangeActivity.kt` | Activity overlay para cambio de idioma |
+
+#### CAPA DI — 1 fichero
+
+| Fichero | Estado |
+|---|---|
+| `di/AppModule.kt` | Mixto: la parte de Room builder + `androidContext()` es Android-only. ViewModels, repository, platform bindings se pueden separar en common + Android modules en Fase 8 |
+
+#### CAPA UI/COMPOSE (se migrará en Fase 9 con Compose Multiplatform) — 20 ficheros
+
+| Fichero | APIs Android pendientes |
+|---|---|
+| `common/LanguageChangeHelper.kt` | `android.app.LocaleManager`, `AppCompatDelegate`, `Build.VERSION` — inherentemente platform-specific |
+| `common/ShareUtils.kt` | `android.graphics.Bitmap`, `asAndroidBitmap()` — expect/actual en Fase 9 |
+| `ui/screens/SettingsScreen.kt` | `Toast`, `Intent`, `Activity`, `Log` |
+| `ui/screens/KonpartsaMapScreen.kt` | `@SuppressLint`, `toColorInt()` |
+| `ui/screens/AppDrawer.kt` | `BackHandler` (androidx.activity.compose) |
+| `ui/composables/card/KonpartsaCard.kt` | `rememberLauncherForActivityResult`, `FileProvider`, `Toast` |
+| `ui/composables/card/CardArgazkia.kt` | `rememberLauncherForActivityResult`, `ActivityResultContracts`, `FileProvider`, `Uri`, `Toast` |
+| `ui/composables/card/CardZenbakia.kt` | `toColorInt()` |
+| `ui/composables/lista/KonpartsaListaCard.kt` | `toColorInt()` |
+| `ui/composables/overlay/OverlayZenbakia.kt` | `toColorInt()` |
+| `ui/composables/settings/AppInfoDialog.kt` | `LocalContext.current` (para Coil) |
+| `ui/composables/settings/DeveloperInfoDialog.kt` | `LocalContext.current` (para Coil) |
+| `ui/theme/Type.kt` | `Font(R.font.*)` — needs Compose MP resources |
+| Otros 7 composables (overlays, navigation, theme) | ✅ Pure Compose — migrarán sin cambios |
+
+### Único issue detectado para arreglar antes de Fase 8
+
+**`java.util.Calendar`** en `KonpartsaRepositoryImpl.kt:19`:
+```kotlin
+val year: String = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR).toString()
+```
+→ Reemplazar con `kotlinx-datetime` (`Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).year`)
+
+### Resumen de APIs Android que se migrarán en Fases 8-9
+
+| API Android | Alternativa KMP | Fase |
+|---|---|---|
+| `java.util.Calendar` | `kotlinx-datetime` | 8 |
+| `Room.databaseBuilder(context, Class, name)` | `@ConstructedBy` + expect/actual factory | 8 |
+| `androidContext()` en Koin | Split en common/android modules | 8 |
+| `R.string.*`, `R.drawable.*`, `R.font.*` | `org.jetbrains.compose.resources` | 9 |
+| `stringResource()`, `painterResource()`, `Font()` | Compose Multiplatform resources API | 9 |
+| `LocalContext.current` (Coil) | Coil 3 KMP (no necesita context) | 9 |
+| `toColorInt()` | `Color.parse()` o función propia | 9 |
+| `BackHandler` | Compose Multiplatform back handling | 9 |
+| `rememberLauncherForActivityResult` | expect/actual image picker | 9 |
+| `Toast.makeText()` | `UserFeedback` interface (ya existe) | 9 |
+| `android.graphics.Bitmap` / `asAndroidBitmap()` | expect/actual bitmap export | 9 |
+
+### Checklist funcional (prueba manual por el usuario)
+
+- [ ] Carrusel de konpartsas (HorizontalPager) funciona
+- [ ] Puntos del slider se colorean correctamente (verde si tiene imagen)
+- [ ] Selección de imagen desde galería funciona
+- [ ] Captura de foto con cámara funciona
+- [ ] Imagen se guarda y se muestra correctamente
+- [ ] Borrado de imagen individual funciona
+- [ ] Borrado masivo de imágenes funciona
+- [ ] Compartir imagen funciona
+- [ ] Vista de mapa con círculos de colores
+- [ ] Filtros del mapa (iluminar/oscurecer)
+- [ ] Tap en círculo del mapa abre diálogo
+- [ ] Lista de konpartsas se muestra
+- [ ] Cards de la lista se expanden/contraen
+- [ ] Cambio de idioma funciona y persiste
+- [ ] Drawer de navegación funciona
+- [ ] Título del drawer se actualiza al navegar
+- [ ] Diálogos de información (app y desarrollador)
+- [ ] Links externos y email se abren
+- [ ] Overlay de imagen se renderiza
+- [ ] Firebase Crashlytics activo
+- [ ] Orientación bloqueada en portrait
+- [ ] Fuente GasoekOne se muestra
+- [ ] Tema claro/oscuro según sistema
+
+---
+## FASE 8: Reestructurar como proyecto KMP — COMPLETADA
+
+**Fecha:** 2026-02-11
+
+### Qué se ha hecho
+
+1. **Módulo `:shared` creado con `kotlin("multiplatform")`:**
+   - Targets: `androidTarget()`, `iosX64()`, `iosArm64()`, `iosSimulatorArm64()`
+   - iOS binaries: framework estático `shared`
+   - Plugins: `kotlin.multiplatform`, `android.library`, `kotlin.serialization`, `ksp`, `room`
+
+2. **Dependencias del shared module:**
+   - `commonMain`: kotlinx-serialization-json, kotlinx-coroutines-core, kotlinx-datetime (nuevo), lifecycle-viewmodel, room-runtime (api), sqlite-bundled, koin-core, koin-core-viewmodel
+   - `androidMain`: koin-android
+   - KSP Room compiler configurado para Android + iOS targets
+
+3. **21 ficheros movidos a `shared/src/commonMain/`:**
+   - Domain (2): `Konpartsa.kt`, `KonpartsaRepository.kt`
+   - Data/Room (9): `AppDatabase.kt`, `Converters.kt`, `Migrations.kt`, 2 DAOs, 3 entities, `Mappers.kt`
+   - Data/Repository (1): `KonpartsaRepositoryImpl.kt`
+   - Platform interfaces (5): `AssetLoader`, `ImageStorage`, `ShareService`, `LocaleManager`, `UserFeedback`
+   - ViewModels (2): `KonpartsaViewModel`, `DrawerTitleViewModel`
+   - State (1): `DrawerTitleState`
+
+4. **4 ficheros movidos a `shared/src/androidMain/`:**
+   - `DatabaseFactory.kt` (nuevo — crea Room con `@ConstructedBy` + `BundledSQLiteDriver`)
+   - `AndroidAssetLoader.kt`, `AndroidImageStorage.kt`, `AndroidShareService.kt`
+
+5. **4 ficheros creados en `shared/src/iosMain/`:**
+   - `DatabaseFactory.kt` (Room con NSDocumentDirectory + BundledSQLiteDriver)
+   - `IosAssetLoader.kt` (NSBundle), `IosImageStorage.kt` (stub), `IosShareService.kt` (stub)
+
+6. **`java.util.Calendar` → `kotlinx-datetime`:**
+   - `KonpartsaRepositoryImpl.kt`: `Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).year`
+
+7. **`DrawerTitleState` refactorizado:**
+   - `mutableIntStateOf` (Compose) → `MutableStateFlow<Int>` (kotlinx.coroutines)
+   - Elimina dependencia de Compose runtime del módulo shared
+   - Constructor recibe `defaultTitleResId: Int` (inyectado como `R.string.app_name` desde app)
+   - `AppDrawer.kt` actualizado: `drawerTitleState.title.collectAsState()`
+
+8. **Room KMP configurado:**
+   - `@ConstructedBy(AppDatabaseConstructor::class)` en `AppDatabase`
+   - `expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase>` en commonMain
+   - KSP genera los `actual` por plataforma
+   - Android database builder: `Room.databaseBuilder<AppDatabase>(context, name)` (sin Class parameter)
+
+9. **DI actualizado:**
+   - `AppModule.kt` usa `getAndroidDatabase(androidApplication())` del shared/androidMain
+   - `DrawerTitleState(R.string.app_name)` — default title inyectado desde app
+
+10. **Gradle actualizado:**
+    - `libs.versions.toml`: +`kotlinxCoroutines`, +`kotlinxDatetime`, +`koin-core`, +`koin-core-viewmodel`, +`android-library`, +`kotlin-multiplatform`, +`room` plugins
+    - `settings.gradle.kts`: `include(":shared")`
+    - Root `build.gradle.kts`: +`kotlin.multiplatform`, +`android.library`, +`room` apply false
+    - `app/build.gradle.kts`: +`implementation(project(":shared"))`, eliminadas deps movidas a shared (Room, lifecycle-viewmodel, kotlinx-serialization), eliminado KSP Room
+
+11. **Build verificado:** `assembleDebug` BUILD SUCCESSFUL (69 tasks, shared + app)
+
+### Estructura final del proyecto
+```
+Pasapote/
+├── shared/                                    # Módulo KMP
+│   ├── build.gradle.kts                       # kotlin("multiplatform") + android.library + Room + KSP
+│   ├── src/
+│   │   ├── commonMain/kotlin/.../             # 21 ficheros: domain, data, platform interfaces, viewmodels, state
+│   │   ├── androidMain/kotlin/.../            # 4 ficheros: DatabaseFactory + Android platform impls
+│   │   └── iosMain/kotlin/.../               # 4 ficheros: DatabaseFactory + iOS stubs
+│   └── schemas/                               # Room schema export
+├── app/                                       # App Android
+│   ├── build.gradle.kts                       # depends on :shared
+│   └── src/main/java/.../                     # 28 ficheros: activities, composables, DI, theme, navigation, utils
+├── build.gradle.kts                           # Root con plugins KMP
+└── settings.gradle.kts                        # include(":app", ":shared")
+```
+
+### Ficheros que quedan en app (28)
+```
+di/AppModule.kt                                — DI wiring (Koin) con Android bindings
+common/LanguageChangeHelper.kt                 — Platform-specific (Android locale APIs)
+common/ShareUtils.kt                           — GraphicsLayer → ByteArray (Android Bitmap)
+ui/activities/ (3)                             — MainActivity, PasapoteApp, ScreenCoverLanguageChangeActivity
+ui/composables/card/ (4)                       — KonpartsaCard, CardArgazkia, CardIzena, CardZenbakia
+ui/composables/lista/ (1)                      — KonpartsaListaCard
+ui/composables/overlay/ (6)                    — DialogFullScreenImageOverlay, etc.
+ui/composables/settings/ (2)                   — AppInfoDialog, DeveloperInfoDialog
+ui/navigation/ (1)                             — ApplicationNavigation
+ui/screens/ (5)                                — AppDrawer, KonpartsaCarousel, KonpartsaListaScreen, KonpartsaMapScreen, SettingsScreen
+ui/theme/ (3)                                  — Color, Theme, Type
+```
+
+---
 ## FASE 9: Compose Multiplatform (UI compartida) — PENDIENTE
 ## FASE 10: Implementaciones iOS — PENDIENTE

@@ -10,13 +10,18 @@ import com.anderpri.pasapote.domain.repository.KonpartsaRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 class KonpartsaRepositoryImpl(
     private val dao: KonpartsaDao,
     private val imageDao: KonpartsaImageDao
 ) : KonpartsaRepository {
 
-    val year: String = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR).toString()
+    val year: String = Clock.System.now()
+        .toLocalDateTime(TimeZone.currentSystemDefault())
+        .year.toString()
 
     override fun getAllKonpartsak(): Flow<List<Konpartsa>> =
         dao.getAllWithImage().map { list ->

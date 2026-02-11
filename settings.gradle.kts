@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Pasapote"
 include(":app")
- 
+include(":shared")

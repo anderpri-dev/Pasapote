@@ -1,4 +1,3 @@
-import org.gradle.kotlin.dsl.implementation
 import java.util.Properties
 
 val keystoreProperties = Properties()
@@ -11,7 +10,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
@@ -83,47 +81,38 @@ android {
 }
 
 dependencies {
+    // Shared KMP module
+    implementation(project(":shared"))
 
+    // Android core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.appcompat)
+
+    // Compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    debugImplementation(libs.androidx.ui.tooling)
 
     // Coil
-    implementation (libs.coil.compose)
+    implementation(libs.coil.compose)
 
-    // Room
-    implementation(libs.androidx.room.runtime)
-    debugImplementation(libs.androidx.ui.tooling)
-    ksp(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.ktx)
-    implementation(libs.sqlite.bundled)
-
-    // Koin
+    // Koin (Android + Compose)
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.android)
     implementation(libs.koin.compose.viewmodel)
 
-    // Multiplatform Settings
+    // Multiplatform Settings (for LanguageChangeHelper in app)
     implementation(libs.multiplatform.settings)
 
-    // Kotlin Serialization
-    implementation(libs.kotlinx.serialization.json)
-
-    // Firebase BoM
+    // Firebase
     implementation(platform(libs.firebase.bom))
-
-    // Firebase Crashlytics
     implementation(libs.firebase.crashlytics)
 
     // Navigation
     implementation(libs.androidx.navigation.compose)
-
-    // AndroidX AppCompat
-    implementation(libs.androidx.appcompat)
 }
