@@ -4,7 +4,7 @@ import shared
 @main
 struct PasapoteApp: App {
     init() {
-        IosModuleKt.initKoin()
+        IosModuleKt.doInitKoin()
     }
 
     var body: some Scene {

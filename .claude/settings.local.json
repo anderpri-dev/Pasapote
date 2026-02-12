@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./gradlew:*)",
+      "WebSearch",
+      "Bash(APP_SRC=\"app/src/main/java/com/anderpri/pasapote\":*)",
+      "Bash(COMMON=\"shared/src/commonMain/kotlin/com/anderpri/pasapote\")",
+      "Bash(git mv:*)",
+      "Bash(ANDROID=\"shared/src/androidMain/kotlin/com/anderpri/pasapote\":*)",
+      "WebFetch(domain:www.jetbrains.com)"
+    ]
+  }
+}
