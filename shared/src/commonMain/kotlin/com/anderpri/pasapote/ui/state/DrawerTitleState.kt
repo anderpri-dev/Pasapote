@@ -3,12 +3,13 @@ package com.anderpri.pasapote.ui.state
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import org.jetbrains.compose.resources.StringResource
 
-class DrawerTitleState(defaultTitleResId: Int = 0) {
-    private val _title = MutableStateFlow(defaultTitleResId)
-    val title: StateFlow<Int> = _title.asStateFlow()
+class DrawerTitleState(defaultTitle: StringResource? = null) {
+    private val _title = MutableStateFlow(defaultTitle)
+    val title: StateFlow<StringResource?> = _title.asStateFlow()
 
-    fun updateTitle(newTitleResId: Int) {
-        _title.value = newTitleResId
+    fun updateTitle(newTitle: StringResource) {
+        _title.value = newTitle
     }
 }

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pasapote</string>
+    <string name="partekatu">Compartir</string>
+    <string name="ezabatu">Eliminar</string>
+    <string name="bai">Si</string>
+    <string name="ez">No</string>
+    <string name="alert_ezabatu_title">Eliminar la foto?</string>
+    <string name="alert_ezabatu_subtitle">Estas seguro de que quieres eliminar la foto del pasapote?</string>
+    <string name="utzi">Cancelar</string>
+    <string name="aukeratu_iturria">Seleccionar origen de imagen</string>
+    <string name="galeria">Galeria</string>
+    <string name="kamera">Camara</string>
+    <string name="sorte_data">Fecha de fundacion:</string>
+    <string name="kokalekua">Ubicacion:</string>
+    <string name="txupinerak">Txupineras:</string>
+    <string name="mapa">Mapa</string>
+    <string name="konpartsen_lista">Lista de konpartsas</string>
+    <string name="pasapotea">Pasapote</string>
+    <string name="ezarpenak">Ajustes</string>
+    <string name="itxura">Apariencia</string>
+    <string name="hizkuntza">Idioma</string>
+    <string name="euskara">Euskera</string>
+    <string name="gaztelera">Castellano</string>
+    <string name="honi_buruz">Acerca de</string>
+    <string name="aplikazioari_buruz">Sobre la aplicacion</string>
+    <string name="garatzaileari_buruz">Sobre el desarrollador</string>
+    <string name="alert_ezabatu_guztiak_btn">Eliminar todas las fotos</string>
+    <string name="alert_ezabatu_guztiak_title">Eliminar todas las fotos?</string>
+    <string name="alert_ezabatu_guztiak_subtitle">Estas seguro de que quieres eliminar todas las fotos del pasapote?</string>
+    <string name="ezabatu_guztiak">Eliminar todas</string>
+    <string name="irudia_partekatu">Irudia partekatu</string>
+    <string name="app_close">Cerrar</string>
+    <string name="devinfo_contact">Contacto</string>
+    <string name="devinfo_position">Desarrollador de aplicaciones moviles</string>
+    <string name="pasapote_info_1">El objetivo de la aplicacion Pasapote es tener el Pasapote de Aste Nagusia en formato digital. Igual que con el fisico se ponen sellos, en la version digital el objetivo es sacarse una foto en cada comparsa y completar la coleccion. Por supuesto, pueden rellenarse ambos a la vez!\n\nEsta aplicacion ha sido creada por amor al arte, para que la gente disfrute de la Aste Nagusia de una manera diferente. Ese es su unico fin, no hay animo de lucro. Todas las imagenes y datos utilizados pertenecen a Bilboko Konpartsak y han sido extraidos de la aplicacion que tienen preparada para Aste Nagusia.</string>
+    <string name="pasapote_info_2">Las txosnas son el corazon de nuestras fiestas y las gestionan tanto Bilboko Konpartsak como otros colectivos que dedican su tiempo a sacar adelante nuestras fiestas populares. Por eso, debemos protegerlas, porque son de todas y para todas. Firma la iniciativa para que se declaren bien inmaterial!</string>
+    <string name="sinatu_ekimena">Firma la iniciativa!</string>
+    <string name="bete_gabekoak_ilundu">Oscurecer no completadas</string>
+    <string name="betetakoak_ilundu">Oscurecer completadas</string>
+    <string name="iluntzea_desaktibatu">Desactivar oscurecer</string>
+    <string name="irudiak_ezabatu_dira">Se han eliminado todas las fotos</string>
+    <string name="irudia_ezabatu_da">Se ha eliminado las foto</string>
+</resources>

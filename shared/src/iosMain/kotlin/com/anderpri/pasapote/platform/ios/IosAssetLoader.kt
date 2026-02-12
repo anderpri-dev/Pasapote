@@ -4,7 +4,7 @@ import com.anderpri.pasapote.platform.AssetLoader
 import platform.Foundation.NSBundle
 
 class IosAssetLoader : AssetLoader {
-    override fun loadJsonFromAssets(fileName: String): String {
+    override suspend fun loadJsonFromAssets(fileName: String): String {
         val path = NSBundle.mainBundle.pathForResource(
             name = fileName.substringBeforeLast("."),
             ofType = fileName.substringAfterLast(".")

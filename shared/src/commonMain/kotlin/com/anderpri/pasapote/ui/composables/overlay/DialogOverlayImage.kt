@@ -1,0 +1,87 @@
+package com.anderpri.pasapote.ui.composables.overlay
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.layer.GraphicsLayer
+import androidx.compose.ui.graphics.layer.drawLayer
+import androidx.compose.ui.graphics.rememberGraphicsLayer
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
+import com.anderpri.pasapote.domain.model.Konpartsa
+import com.anderpri.pasapote.resources.Res
+import com.anderpri.pasapote.resources.background
+import org.jetbrains.compose.resources.painterResource
+
+@Composable
+fun DialogOverlayImage(konpartsa: Konpartsa, onPainted: (GraphicsLayer) -> Unit) {
+    val graphicsLayer = rememberGraphicsLayer()
+    Box(
+        modifier = Modifier
+            .aspectRatio(9f / 16f)
+            .drawWithContent {
+                graphicsLayer.record {
+                    this@drawWithContent.drawContent()
+                }
+                drawLayer(graphicsLayer)
+                onPainted(graphicsLayer)
+            }
+    ) {
+        // Argazkia
+        AsyncImage(
+            model = konpartsa.imagePath,
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .aspectRatio(9f / 16f)
+                .fillMaxHeight(),
+        )
+
+        // Atzeko irudia
+        Image(
+            painter = painterResource(Res.drawable.background),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .aspectRatio(9f / 16f)
+                .fillMaxHeight(),
+            alpha = 0.2f
+        )
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                OverlayZenbakia(konpartsa)
+                Spacer(modifier = Modifier.width(16.dp))
+                OverlayKamiseta(konpartsa)
+            }
+            OverlayIzena(konpartsa)
+        }
+
+        OverlayEsteka()
+    }
+}

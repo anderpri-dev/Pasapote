@@ -518,5 +518,150 @@ ui/theme/ (3)                                  — Color, Theme, Type
 ```
 
 ---
-## FASE 9: Compose Multiplatform (UI compartida) — PENDIENTE
+## FASE 9: Compose Multiplatform (UI compartida) — COMPLETADA
+
+**Fecha:** 2026-02-11
+
+### Qué se ha hecho
+
+1. **Compose Multiplatform 1.10.1 añadido al proyecto:**
+   - `libs.versions.toml`: Añadida `composeMultiplatform = "1.10.1"` y plugin `compose-multiplatform`
+   - Root `build.gradle.kts`: Añadido `alias(libs.plugins.compose.multiplatform) apply false`
+   - `shared/build.gradle.kts`: Añadidos plugins `compose.multiplatform` + `kotlin.compose`. Dependencias CMP en commonMain: `compose.runtime`, `compose.ui`, `compose.foundation`, `compose.material3`, `compose.components.resources` (api), `coil-compose`, `navigation-compose`, `koin-compose-viewmodel`
+   - `androidMain`: Añadidas `activity-compose`, `multiplatform-settings`, `appcompat`
+
+2. **Recursos migrados a CMP (`shared/src/commonMain/composeResources/`):**
+   - `drawable/`: 16 ficheros (vectores XML + raster) + `menu.xml` (nuevo, hamburger icon)
+   - `font/gasoekone.ttf`: Fuente custom
+   - `files/`: 30 ficheros (PNGs de konpartsas, ander.jpg, ic_launcher-playstore.png, konpartsak.json)
+   - `values/strings.xml`: Strings por defecto (eu), 42 entries. Claves renombradas: `devinfo.contact` → `devinfo_contact`, `devinfo.position` → `devinfo_position`
+   - `values-es/strings.xml`: Strings en español, 43 entries
+   - Config: `packageOfResClass = "com.anderpri.pasapote.resources"`, `publicResClass = true`
+
+3. **Platform expect/actual creados:**
+   - `ImagePicker.kt` (expect): `rememberGalleryPicker()`, `rememberCameraPicker()` composables
+   - `PlatformBackHandler.kt` (expect): `PlatformBackHandler(enabled, onBack)` composable
+   - `ShareUtils.kt` (expect): `GraphicsLayer.toImageBytes(): ByteArray` suspend function
+   - Android actuals: `AndroidImagePicker.kt` (ActivityResultContracts), `AndroidBackHandler.kt` (BackHandler), `AndroidShareUtils.kt` (asAndroidBitmap)
+   - iOS stubs: `IosImagePicker.kt`, `IosBackHandler.kt`, `IosShareUtils.kt` (no-op/empty)
+
+4. **Utilidades comunes creadas:**
+   - `ColorUtil.kt`: `parseHexColor(hexString)` → reemplaza `toColorInt()` (Android-only)
+   - `CmpAssetLoader.kt`: Usa `Res.readBytes("files/$fileName")` para cargar assets vía CMP Resources API
+   - `AssetLoader` interface actualizada a `suspend fun` (necesario para `Res.readBytes()` que es suspend)
+
+5. **Platform abstractions actualizadas:**
+   - `AndroidUserFeedback.kt`: Implementación con `Toast.makeText()`
+   - `AndroidLocaleManager.kt`: Gestión de idioma con `Intent.setClassName()` para ScreenCoverLanguageChangeActivity
+   - `IosUserFeedback.kt`, `IosLocaleManager.kt`: Stubs iOS
+   - `UserFeedback` y `LocaleManager` interfaces ya existían desde Fase 0
+
+6. **State/ViewModel actualizados para CMP:**
+   - `DrawerTitleState`: `Int` (R.string.xxx) → `StringResource?` (Res.string.xxx)
+   - `DrawerTitleViewModel`: `updateTitle(Int)` → `updateTitle(StringResource)`
+
+7. **Theme migrado a CMP:**
+   - `Color.kt`: Sin cambios (ya era pure Compose)
+   - `Type.kt`: Top-level `val Typography` → `@Composable fun appTypography()` (CMP `Font(Res.font.*)` es composable)
+   - `Theme.kt`: Usa `appTypography()` composable
+
+8. **20 composables migrados a `shared/src/commonMain/`:**
+   - Sustituciones globales:
+     - `R.string.*` → `Res.string.*`, `R.drawable.*` → `Res.drawable.*`, `R.font.*` → `Res.font.*`
+     - `stringResource(R.string.xxx)` → `stringResource(Res.string.xxx)` (CMP)
+     - `painterResource(R.drawable.xxx)` → `painterResource(Res.drawable.xxx)` (CMP)
+     - `"file:///android_asset/..."` → `Res.getUri("files/...")`
+     - `LocalContext.current` → `LocalPlatformContext.current` (Coil 3 KMP)
+     - `toColorInt()` → `parseHexColor()`
+     - `Toast.makeText()` → `UserFeedback.showMessage()`
+     - `BackHandler` → `PlatformBackHandler`
+     - `rememberLauncherForActivityResult` → `rememberGalleryPicker()`/`rememberCameraPicker()`
+     - `Icons.Default.Menu` → `painterResource(Res.drawable.menu)` (custom drawable)
+     - `AsyncImage(model = R.drawable.mapa)` → `Image(painter = painterResource(Res.drawable.mapa))`
+   - `CustomDrawerItem` params: `Int` → `StringResource`/`DrawableResource`
+
+9. **App module adelgazado a 4 ficheros:**
+   - `PasapoteApp.kt` — Application + Koin init
+   - `MainActivity.kt` — Entry point, inyecta LocaleManager
+   - `ScreenCoverLanguageChangeActivity.kt` — Cover activity para cambio de idioma
+   - `AppModule.kt` — DI wiring con CmpAssetLoader, Android impls, `DrawerTitleState(Res.string.app_name)`
+   - Eliminados: 23 ficheros (composables, theme, navigation, ShareUtils, LanguageChangeHelper)
+   - `app/build.gradle.kts` simplificado: eliminadas deps movidas a shared (coil, koin-compose-viewmodel, multiplatform-settings, serialization)
+
+10. **Build verificado:** `assembleDebug` BUILD SUCCESSFUL
+
+### Errores encontrados y resueltos durante la migración
+
+| Error | Causa | Solución |
+|---|---|---|
+| expect/actual mismatch | Actuals en package `.platform.android`, expects en `.platform` | Cambiado package de actuals a `.platform` |
+| `loadJsonFromAssets` overrides nothing | Interface non-suspend, override suspend (para `Res.readBytes`) | Interface cambiada a `suspend fun` |
+| `Unresolved reference: Icons` | `compose.material3` no incluye material-icons-core en CMP | Creado `menu.xml` drawable, `painterResource(Res.drawable.menu)` |
+| `Cannot access StringResource` | `compose.components.resources` era `implementation` (no transitivo) | Cambiado a `api(compose.components.resources)` |
+| `compose.materialIconsCore` unresolved | Accessor no existe en CMP 1.10.1 Gradle DSL | Usado drawable XML en vez de Icons API |
+
+### Estructura final del proyecto
+
+```
+Pasapote/
+├── shared/                                          # Módulo KMP
+│   ├── build.gradle.kts                             # CMP 1.10.1 + kotlin.compose
+│   ├── src/
+│   │   ├── commonMain/
+│   │   │   ├── kotlin/.../
+│   │   │   │   ├── data/ (9)                        # Room entities, DAOs, mappers, DB, migrations, repository
+│   │   │   │   ├── domain/ (2)                      # Konpartsa model, KonpartsaRepository interface
+│   │   │   │   ├── platform/ (8)                    # Interfaces + CmpAssetLoader + ColorUtil + expect declarations
+│   │   │   │   └── ui/ (22)                         # Composables, screens, theme, navigation, viewmodels, state
+│   │   │   └── composeResources/
+│   │   │       ├── drawable/ (17)                   # Vector XMLs + raster images + menu icon
+│   │   │       ├── font/ (1)                        # gasoekone.ttf
+│   │   │       ├── files/ (30)                      # Konpartsa PNGs, assets
+│   │   │       ├── values/strings.xml               # Default strings (eu)
+│   │   │       └── values-es/strings.xml            # Spanish strings
+│   │   ├── androidMain/kotlin/.../                  # 7 ficheros: DatabaseFactory + Android impls (AssetLoader, ImageStorage, ShareService, ImagePicker, BackHandler, ShareUtils, UserFeedback, LocaleManager)
+│   │   └── iosMain/kotlin/.../                      # 8 ficheros: DatabaseFactory + iOS stubs
+│   └── schemas/                                     # Room schema export
+├── app/                                             # App Android (thin shell)
+│   ├── build.gradle.kts                             # depends on :shared
+│   └── src/main/java/.../
+│       ├── di/AppModule.kt                          # Koin DI wiring
+│       └── ui/activities/ (3)                       # MainActivity, PasapoteApp, ScreenCoverLanguageChangeActivity
+├── build.gradle.kts                                 # Root: CMP + KMP plugins
+└── settings.gradle.kts                              # include(":app", ":shared")
+```
+
+### App module: 4 ficheros restantes
+```
+di/AppModule.kt                                     — Koin module: CmpAssetLoader, Android impls, DrawerTitleState(Res.string.app_name)
+ui/activities/PasapoteApp.kt                        — Application class + startKoin
+ui/activities/MainActivity.kt                       — Entry point, inject LocaleManager
+ui/activities/ScreenCoverLanguageChangeActivity.kt  — Cover para cambio de idioma
+```
+
+### Checklist funcional (prueba manual por el usuario)
+
+- [ ] Carrusel de konpartsas funciona
+- [ ] Puntos del slider se colorean correctamente
+- [ ] Selección de imagen desde galería
+- [ ] Captura de foto con cámara
+- [ ] Imagen se guarda y se muestra
+- [ ] Borrado de imagen individual
+- [ ] Borrado masivo de imágenes
+- [ ] Compartir imagen
+- [ ] Mapa con círculos de colores
+- [ ] Filtros del mapa (iluminar/oscurecer)
+- [ ] Tap en círculo del mapa abre diálogo
+- [ ] Lista de konpartsas
+- [ ] Cards de la lista se expanden/contraen
+- [ ] Cambio de idioma funciona y persiste
+- [ ] Drawer de navegación funciona
+- [ ] Título del drawer se actualiza al navegar
+- [ ] Diálogos de información (app y desarrollador)
+- [ ] Links externos y email se abren
+- [ ] Overlay de imagen se renderiza
+- [ ] Fuente GasoekOne se muestra
+- [ ] Tema claro/oscuro según sistema
+
+---
 ## FASE 10: Implementaciones iOS — PENDIENTE

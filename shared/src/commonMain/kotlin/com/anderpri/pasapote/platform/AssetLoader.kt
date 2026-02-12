@@ -5,5 +5,5 @@ package com.anderpri.pasapote.platform
  * Android: Context.assets | iOS: NSBundle.mainBundle
  */
 interface AssetLoader {
-    fun loadJsonFromAssets(fileName: String): String
+    suspend fun loadJsonFromAssets(fileName: String): String
 }

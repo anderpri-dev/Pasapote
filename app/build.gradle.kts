@@ -10,7 +10,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
 }
@@ -67,13 +66,6 @@ android {
     buildFeatures {
         compose = true
     }
-    sourceSets {
-        getByName("main") {
-            assets {
-                srcDirs("src/main/assets")
-            }
-        }
-    }
     androidResources {
         //noinspection MissingResourcesProperties
         generateLocaleConfig = true
@@ -88,31 +80,21 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.appcompat)
 
-    // Compose
+    // Compose (for Activities that use setContent)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     debugImplementation(libs.androidx.ui.tooling)
 
-    // Coil
-    implementation(libs.coil.compose)
-
-    // Koin (Android + Compose)
+    // Koin (Android)
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.android)
-    implementation(libs.koin.compose.viewmodel)
-
-    // Multiplatform Settings (for LanguageChangeHelper in app)
-    implementation(libs.multiplatform.settings)
 
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.crashlytics)
 
-    // Navigation
+    // Navigation (for rememberNavController in MainActivity)
     implementation(libs.androidx.navigation.compose)
 }
