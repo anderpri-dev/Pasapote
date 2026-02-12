@@ -7,7 +7,9 @@
       "Bash(COMMON=\"shared/src/commonMain/kotlin/com/anderpri/pasapote\")",
       "Bash(git mv:*)",
       "Bash(ANDROID=\"shared/src/androidMain/kotlin/com/anderpri/pasapote\":*)",
-      "WebFetch(domain:www.jetbrains.com)"
+      "WebFetch(domain:www.jetbrains.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ]
   }
 }
