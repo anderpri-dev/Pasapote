@@ -26,8 +26,6 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
-import coil3.request.transformations
-import coil3.transform.RoundedCornersTransformation
 import com.anderpri.pasapote.platform.ShareService
 import com.anderpri.pasapote.resources.Res
 import com.anderpri.pasapote.resources.app_close
@@ -68,7 +66,6 @@ fun AppInfoDialog(onDismiss: () -> Unit) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalPlatformContext.current)
                         .data(Res.getUri("files/ic_launcher-playstore.png"))
-                        .transformations(RoundedCornersTransformation(80f))
                         .build(),
                     contentDescription = null,
                     placeholder = ColorPainter(Color.Gray),
