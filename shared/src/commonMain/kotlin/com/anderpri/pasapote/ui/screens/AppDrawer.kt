@@ -121,7 +121,8 @@ fun AppDrawer(
 
                     HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
-                    val currentRoute = navController.currentDestination?.route
+                    val currentRoute = navController.currentBackStackEntryFlow
+                        .collectAsState(navController.currentBackStackEntry).value?.destination?.route
 
                     // Pasapotea
                     CustomDrawerItem(
