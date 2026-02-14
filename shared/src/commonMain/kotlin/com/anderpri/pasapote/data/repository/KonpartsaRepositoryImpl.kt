@@ -7,6 +7,7 @@ import com.anderpri.pasapote.data.local.mapper.toDomain
 import com.anderpri.pasapote.data.local.mapper.toEntity
 import com.anderpri.pasapote.domain.model.Konpartsa
 import com.anderpri.pasapote.domain.repository.KonpartsaRepository
+import com.anderpri.pasapote.platform.ImageStorage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
@@ -17,7 +18,8 @@ import kotlinx.datetime.toLocalDateTime
 
 class KonpartsaRepositoryImpl(
     private val dao: KonpartsaDao,
-    private val imageDao: KonpartsaImageDao
+    private val imageDao: KonpartsaImageDao,
+    private val imageStorage: ImageStorage
 ) : KonpartsaRepository {
 
     val year: String = run {
@@ -30,7 +32,12 @@ class KonpartsaRepositoryImpl(
     override fun getAllKonpartsak(): Flow<List<Konpartsa>> =
         dao.getAllWithImage().map { list ->
             list.map { konpartsaWithImage ->
-                konpartsaWithImage.toDomain()
+                val konpartsa = konpartsaWithImage.toDomain()
+                if (konpartsa.imagePath != null) {
+                    konpartsa.copy(imagePath = imageStorage.resolveImagePath(konpartsa.imagePath))
+                } else {
+                    konpartsa
+                }
             }
         }
 

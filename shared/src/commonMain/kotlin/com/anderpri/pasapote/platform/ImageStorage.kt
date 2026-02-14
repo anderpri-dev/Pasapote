@@ -9,4 +9,5 @@ interface ImageStorage {
     suspend fun copyImageToStorage(platformUri: String, id: String): String
     fun deleteImage(imagePath: String): Boolean
     fun deleteAllFiles()
+    fun resolveImagePath(storedPath: String): String
 }

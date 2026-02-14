@@ -23,16 +23,24 @@ class IosImageStorage : ImageStorage {
     }
 
     override suspend fun copyImageToStorage(platformUri: String, id: String): String {
-        val destPath = "${documentsDirectory()}/${id}.jpg"
+        val fileName = "${id}.jpg"
+        val destPath = "${documentsDirectory()}/$fileName"
         if (fileManager.fileExistsAtPath(destPath)) {
             fileManager.removeItemAtPath(destPath, error = null)
         }
         fileManager.copyItemAtPath(platformUri, toPath = destPath, error = null)
-        return destPath
+        return fileName
     }
 
     override fun deleteImage(imagePath: String): Boolean {
-        return fileManager.removeItemAtPath(imagePath, error = null)
+        val fullPath = if (imagePath.startsWith("/")) imagePath
+            else "${documentsDirectory()}/$imagePath"
+        return fileManager.removeItemAtPath(fullPath, error = null)
+    }
+
+    override fun resolveImagePath(storedPath: String): String {
+        if (storedPath.startsWith("/")) return storedPath
+        return "${documentsDirectory()}/$storedPath"
     }
 
     override fun deleteAllFiles() {

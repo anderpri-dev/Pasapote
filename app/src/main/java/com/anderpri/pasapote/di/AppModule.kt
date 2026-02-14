@@ -31,7 +31,7 @@ val appModule = module {
     single { get<AppDatabase>().konpartsaImageDao() }
 
     // Repository
-    single<KonpartsaRepository> { KonpartsaRepositoryImpl(get(), get()) }
+    single<KonpartsaRepository> { KonpartsaRepositoryImpl(get(), get(), get()) }
 
     // Platform
     single<AssetLoader> { CmpAssetLoader() }

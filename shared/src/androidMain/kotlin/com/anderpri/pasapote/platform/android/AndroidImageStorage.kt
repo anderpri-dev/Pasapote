@@ -25,6 +25,8 @@ class AndroidImageStorage(private val context: Context) : ImageStorage {
         return file.exists() && file.delete()
     }
 
+    override fun resolveImagePath(storedPath: String): String = storedPath
+
     override fun deleteAllFiles() {
         val dirs = listOf(
             context.cacheDir,

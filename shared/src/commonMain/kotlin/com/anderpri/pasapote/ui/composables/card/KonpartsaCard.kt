@@ -17,6 +17,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -70,9 +71,20 @@ fun KonpartsaCard(
     }
 
     var showImageSourceDialog by remember { mutableStateOf(false) }
+    var pendingPickerAction by remember { mutableStateOf<String?>(null) }
 
     val cameraLauncher = rememberCameraPicker { uri ->
         uri?.let { viewModel.onImageSelected(konpartsa, it) }
+    }
+
+    LaunchedEffect(showImageSourceDialog, pendingPickerAction) {
+        if (!showImageSourceDialog && pendingPickerAction != null) {
+            when (pendingPickerAction) {
+                "gallery" -> launcher()
+                "camera" -> cameraLauncher()
+            }
+            pendingPickerAction = null
+        }
     }
 
     Card(
@@ -185,14 +197,14 @@ fun KonpartsaCard(
             text = { Text(stringResource(Res.string.aukeratu_iturria)) },
             confirmButton = {
                 Button(onClick = {
+                    pendingPickerAction = "gallery"
                     showImageSourceDialog = false
-                    launcher()
                 }) { Text(stringResource(Res.string.galeria)) }
             },
             dismissButton = {
                 Button(onClick = {
+                    pendingPickerAction = "camera"
                     showImageSourceDialog = false
-                    cameraLauncher()
                 }) { Text(stringResource(Res.string.kamera)) }
             }
         )
