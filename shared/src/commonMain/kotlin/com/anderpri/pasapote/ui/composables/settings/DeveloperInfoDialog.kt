@@ -11,13 +11,18 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
@@ -40,7 +45,12 @@ import org.koin.compose.koinInject
 @Composable
 fun DeveloperInfoDialog(onDismiss: () -> Unit) {
     val shareService: ShareService = koinInject()
+    val alpha = remember { Animatable(0f) }
+    LaunchedEffect(Unit) {
+        alpha.animateTo(1f, animationSpec = tween(300))
+    }
     AlertDialog(
+        modifier = Modifier.alpha(alpha.value),
         onDismissRequest = onDismiss,
         confirmButton = {
             Button(onClick = onDismiss) {
