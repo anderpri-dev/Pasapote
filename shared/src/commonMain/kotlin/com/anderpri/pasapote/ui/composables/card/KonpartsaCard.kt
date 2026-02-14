@@ -97,7 +97,6 @@ fun KonpartsaCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
-        onClick = { }
     ) {
         Box {
             Image(
