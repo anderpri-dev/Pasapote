@@ -1,5 +1,7 @@
 package com.anderpri.pasapote.ui.screens
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -203,10 +205,16 @@ private fun MapaPuntuak(
 
         selectedKonpartsaId.value?.let { konpartsaId ->
             Dialog(onDismissRequest = { selectedKonpartsaId.value = null }) {
+                val alpha = remember { Animatable(0f) }
+                LaunchedEffect(Unit) {
+                    alpha.animateTo(1f, animationSpec = tween(350))
+                }
+
                 Box(
                     modifier = Modifier
                         .padding(paddingValues = paddingValues)
                         .aspectRatio(9f / 16f)
+                        .alpha(alpha.value)
                 ) {
                     KonpartsaCard(konpartsaId = konpartsaId)
                 }
