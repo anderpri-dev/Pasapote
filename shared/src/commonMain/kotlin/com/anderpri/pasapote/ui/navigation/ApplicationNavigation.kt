@@ -16,10 +16,10 @@ import com.anderpri.pasapote.ui.screens.KonpartsaMapScreen
 import com.anderpri.pasapote.ui.screens.SettingsScreen
 
 @Composable
-fun ApplicationNavigation(navController: NavHostController, paddingValues: PaddingValues) {
+fun ApplicationNavigation(navController: NavHostController, paddingValues: PaddingValues, startDestination: String = "home") {
     NavHost(
         navController = navController,
-        startDestination = "home",
+        startDestination = startDestination,
         enterTransition = { defaultEnterTransition() },
         exitTransition = { defaultExitTransition() },
         popEnterTransition = { defaultEnterTransition() },

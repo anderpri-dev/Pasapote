@@ -10,8 +10,12 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.SharedPreferencesSettings
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 class AndroidLocaleManager(private val context: Context) : com.anderpri.pasapote.platform.LocaleManager {
+    private val _currentLanguage = MutableStateFlow(getLanguage())
+    override val currentLanguage: StateFlow<String> = _currentLanguage
 
     private fun getSettings(): Settings =
         SharedPreferencesSettings(
@@ -29,6 +33,7 @@ class AndroidLocaleManager(private val context: Context) : com.anderpri.pasapote
 
     override fun changeLanguage(languageCode: String) {
         getSettings().putString("language", languageCode)
+        _currentLanguage.value = languageCode
 
         // Launch cover activity to hide locale switch animation
         try {
