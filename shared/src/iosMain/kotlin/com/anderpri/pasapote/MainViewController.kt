@@ -49,10 +49,15 @@ fun MainViewController() = ComposeUIViewController {
         Box(Modifier.fillMaxSize()) {
             key(displayLanguage) {
                 val navController = rememberNavController()
-                val startRoute = restoreRoute ?: "home"
+
+                LaunchedEffect(restoreRoute) {
+                    if (restoreRoute != null) {
+                        navController.navigate(restoreRoute!!)
+                    }
+                }
 
                 AppDrawer(navController) { paddingValues ->
-                    ApplicationNavigation(navController, paddingValues, startDestination = startRoute)
+                    ApplicationNavigation(navController, paddingValues)
                 }
             }
 
